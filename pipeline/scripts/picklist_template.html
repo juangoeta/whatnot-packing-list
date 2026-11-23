@@ -1,0 +1,58 @@
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#FAF7F2;--panel:#FFFFFF;--ink:#221D25;--muted:#6E6674;--rule:#E4DCD4;--accent:#B5236B;--accent-soft:#F7E3EC;--flag-bg:#FFF3CF;--flag-ink:#7A5200;--done:#2E7D4F;--done-bg:#E3F1E8;--head:#F2ECE5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--accent:#F06BA8;--accent-soft:#3A1F2E;--flag-bg:#3B3013;--flag-ink:#F4D67A;--done:#7BD39A;--done-bg:#1E3527;--head:#2A252F}}
+:root[data-theme="dark"]{--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--accent:#F06BA8;--accent-soft:#3A1F2E;--flag-bg:#3B3013;--flag-ink:#F4D67A;--done:#7BD39A;--done-bg:#1E3527;--head:#2A252F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.4;padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
+header .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline;padding-block:12px}
+h1{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:30px;letter-spacing:.01em;margin:0;text-transform:uppercase}
+.sum{color:var(--muted);font-size:15px}
+.sum b{color:var(--ink);font-variant-numeric:tabular-nums}
+.tools{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+input[type=search]{font:inherit;padding:6px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink);width:200px;max-width:100%}
+button{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h2{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:28px 0 6px;display:flex;gap:10px;align-items:baseline}
+h2 span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);letter-spacing:0}
+ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+li{display:grid;grid-template-columns:28px 64px 1fr;gap:4px 12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--rule)}
+li input{width:20px;height:20px;margin-top:5px;accent-color:var(--done)}
+.n{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:30px;line-height:1;text-align:right;font-variant-numeric:tabular-nums}
+.n small{display:block;font-family:"Source Sans 3",sans-serif;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.name{font-weight:600}
+.warn{display:inline-block;font-size:12px;font-weight:600;background:var(--flag-bg);color:var(--flag-ink);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.pk{grid-column:3;display:flex;flex-wrap:wrap;gap:4px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted)}
+.pk i{font-style:normal;background:var(--head);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.pk i b{color:var(--ink);font-weight:500}
+li.done{background:var(--done-bg)}
+li.done .name{text-decoration:line-through;color:var(--muted)}
+@media (max-width:520px){h1{font-size:24px}.tools{margin-left:0;width:100%}input[type=search]{flex:1}li{grid-template-columns:26px 48px 1fr}.n{font-size:24px}}
+@media print{header{position:static}.tools{display:none}li{break-inside:avoid;padding:6px 0}body{font-size:13px}}
+</style>
+<header><div class="wrap">
+<h1>__TITLE__</h1>
+<div class="sum"><b>__NU__</b> units across <b>__NP__</b> products, for __NPK__ packages · <b id="left"></b> left to pull</div>
+<div class="tools"><input id="q" type="search" placeholder="Search product or pkg #" aria-label="Search"><button id="hide" type="button">Hide pulled</button><button id="pr" type="button">Print</button></div>
+</div></header>
+<main class="wrap" id="main"></main>
+<script>
+const D=__DATA__,KEY='__KEY__';let S={};try{S=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+let hide=false;const main=document.getElementById('main'),esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function draw(){const q=document.getElementById('q').value.trim().toLowerCase();let h='',left=0;
+ D.forEach((s,si)=>{let rows='';s.items.forEach((it,ii)=>{const id=si+'_'+ii,done=!!S[id];if(!done)left++;
+  const hay=(it.name+' '+it.pk.map(p=>'pkg '+p[0]+' #'+p[0]).join(' ')).toLowerCase();
+  if((q&&!hay.includes(q))||(hide&&done))return;
+  rows+=`<li class="${done?'done':''}"><input type="checkbox" id="c${id}" data-id="${id}" ${done?'checked':''} aria-label="Pulled"><div class="n">${it.units}<small>${it.orders} order${it.orders>1?'s':''}</small></div><label class="name" for="c${id}">${esc(it.name)}${it.flag?`<span class="warn">${it.flag} to check</span>`:''}</label><div class="pk">${it.pk.map(p=>`<i>pkg <b>${p[0]}</b> ×${p[1]}</i>`).join('')}</div></li>`});
+  if(rows)h+=`<h2>${esc(s.section)} <span>${s.items.reduce((a,i)=>a+i.units,0)} units</span></h2><ul>${rows}</ul>`});
+ main.innerHTML=h||'<p>No match.</p>';document.getElementById('left').textContent=left+' products';}
+main.addEventListener('change',e=>{const id=e.target.dataset.id;if(!id)return;S[id]=e.target.checked;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}draw()});
+document.getElementById('q').addEventListener('input',draw);
+document.getElementById('hide').addEventListener('click',e=>{hide=!hide;e.target.textContent=hide?'Show pulled':'Hide pulled';draw()});
+document.getElementById('pr').addEventListener('click',()=>window.print());
+draw();
+</script>

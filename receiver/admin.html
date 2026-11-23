@@ -1,0 +1,88 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packing List Clients</title>
+<style>
+  :root{--bg:#FAF7F2;--panel:#fff;--ink:#221D25;--muted:#6E6674;--rule:#E4DCD4;--accent:#B5236B;--soft:#F7E6EE;--ok:#1F7A4D;--bad:#B3261E;color-scheme:light}
+  @media (prefers-color-scheme: dark){:root:not([data-theme=light]){--bg:#1B171D;--panel:#262028;--ink:#F2ECEF;--muted:#A79FAA;--rule:#3C343F;--accent:#D55181;--soft:#3A2230;color-scheme:dark}}
+  [hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,system-ui,"Segoe UI",sans-serif;padding-block:24px;padding-inline:16px}
+  main{max-width:1000px;margin:0 auto;display:grid;gap:20px}
+  h1{font-size:22px;margin:0;letter-spacing:-.01em}h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+  .top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .tile{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 14px}.tile b{display:block;font-size:24px;font-variant-numeric:tabular-nums}.tile span{color:var(--muted);font-size:12px}
+  section{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px}
+  table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--rule)}td{padding:8px;border-bottom:1px solid var(--rule);vertical-align:top}tr:last-child td{border-bottom:0}
+  .wrap{overflow-x:auto}code{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--soft);padding:2px 6px;border-radius:5px;cursor:pointer}
+  .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}.on{background:#E3F3EA;color:var(--ok)}.off{background:#F8E4E2;color:var(--bad)}.zero{background:var(--soft);color:var(--accent)}
+  button{font:inherit;border:0;border-radius:7px;padding:6px 10px;cursor:pointer;background:var(--soft);color:var(--ink)}button.pri{background:var(--accent);color:#fff;font-weight:600}button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  input{font:inherit;padding:7px 9px;border:1px solid var(--rule);border-radius:7px;background:var(--panel);color:var(--ink)}
+  form.add{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+  .muted{color:var(--muted)}a{color:var(--accent)}.log{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;max-height:260px;overflow:auto;margin:0}
+  #gate{max-width:380px;margin:80px auto;display:grid;gap:10px}#msg{min-height:18px}.err{color:var(--bad)}.okc{color:var(--ok)}
+  .actions{display:flex;gap:6px;flex-wrap:wrap}
+</style>
+<div id="gate" hidden>
+  <h1>Packing List Clients</h1>
+  <p class="muted">Enter the master access code to open the admin page.</p>
+  <input id="code" type="password" placeholder="master access code" autocomplete="current-password">
+  <button class="pri" id="enter">Open</button><div id="gateMsg" class="err"></div>
+</div>
+<main id="app" hidden>
+  <div class="top"><h1>Packing List Clients</h1><span class="muted"><span id="stamp"></span> · <a href="#" id="signout">Sign out</a></span></div>
+  <div class="tiles">
+    <div class="tile"><b id="tClients">–</b><span>active clients</span></div>
+    <div class="tile"><b id="tLeft">–</b><span>show credits outstanding</span></div>
+    <div class="tile"><b id="tShows">–</b><span>shows received</span></div>
+    <div class="tile"><b id="tToday">–</b><span>received today</span></div>
+  </div>
+  <section>
+    <h2>Clients</h2>
+    <div class="wrap"><table><thead><tr><th>Client</th><th>Access code</th><th>Left</th><th>Used</th><th>Status</th><th>Last show</th><th></th></tr></thead><tbody id="clients"></tbody></table></div>
+    <form class="add" id="addForm"><input id="newName" placeholder="New client name" required><input id="newCredits" type="number" min="0" value="1" style="width:80px" title="show credits"><button class="pri" type="submit">Add client</button><span id="msg"></span></form>
+    <p class="muted" style="margin:10px 0 0">Click a code to copy it. Credits: one Whatnot show each; re-sends of the same show are free.</p>
+  </section>
+  <section>
+    <h2>Shows received</h2>
+    <div class="wrap"><table><thead><tr><th>When</th><th>Client</th><th>Show</th><th>Orders</th><th>Sends</th><th>Folder</th></tr></thead><tbody id="shows"></tbody></table></div>
+  </section>
+  <section><h2>Receiver log</h2><pre class="log" id="log"></pre></section>
+</main>
+<script>
+const $=s=>document.querySelector(s); let CODE='';
+try{CODE=localStorage.getItem('wnAdminCode')||''}catch(e){}
+const api=(path,body)=>fetch('/admin/api/'+path,{method:body?'POST':'GET',headers:{'X-Packing-Token':CODE,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.message||('HTTP '+r.status));return j});
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function fmt(iso){if(!iso)return '';const d=new Date(iso);return d.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
+async function load(){
+  const d=await api('state');
+  $('#stamp').textContent='updated '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+  const cl=Object.entries(d.clients).map(([code,c])=>({code,...c}));
+  const active=cl.filter(c=>c.active!==false);
+  $('#tClients').textContent=active.length; $('#tLeft').textContent=active.reduce((a,c)=>a+(c.credits||0),0);
+  const shows=[];for(const c of cl)for(const [live,s] of Object.entries(c.shows||{}))shows.push({client:c.name,live,...s});
+  shows.sort((a,b)=>(b.last||'').localeCompare(a.last||''));
+  const today=new Date().toISOString().slice(0,10);
+  $('#tShows').textContent=shows.length; $('#tToday').textContent=shows.filter(s=>(s.first||'').startsWith(today)).length;
+  cl.sort((a,b)=>a.name.localeCompare(b.name));
+  $('#clients').innerHTML=cl.map(c=>{const last=Object.values(c.shows||{}).sort((a,b)=>(b.last||'').localeCompare(a.last||''))[0];const off=c.active===false;
+    return `<tr><td><strong>${esc(c.name)}</strong><br><span class="muted">since ${esc(c.created||'')}</span></td><td><code data-copy="${esc(c.code)}" title="copy">${esc(c.code)}</code></td>
+    <td>${c.credits||0}${!off&&!(c.credits||0)?' <span class="pill zero">out</span>':''}</td><td>${c.used||0}</td><td><span class="pill ${off?'off':'on'}">${off?'disabled':'active'}</span></td>
+    <td>${last?esc(fmt(last.last))+'<br><span class="muted">'+esc((last.title||'').slice(0,32))+'</span>':'<span class="muted">none yet</span>'}</td>
+    <td class="actions"><button data-act="credit" data-code="${esc(c.code)}" data-n="1">+1</button><button data-act="credit" data-code="${esc(c.code)}" data-n="4">+4</button><button data-act="credit" data-code="${esc(c.code)}" data-n="-1">−1</button><button data-act="toggle" data-code="${esc(c.code)}">${off?'Enable':'Disable'}</button></td></tr>`}).join('')||'<tr><td colspan="7" class="muted">No clients yet. Add one below.</td></tr>';
+  $('#shows').innerHTML=shows.map(s=>`<tr><td>${esc(fmt(s.first))}</td><td>${esc(s.client)}</td><td>${esc(s.title||s.live)}</td><td>${s.items||''}</td><td>${s.sends||1}</td><td class="muted">${esc((s.folder||'').replace(/^.*Whatnot Packing Lists\//,''))}</td></tr>`).join('')||'<tr><td colspan="6" class="muted">Nothing received from clients yet.</td></tr>';
+  $('#log').textContent=d.log.join('\n');
+}
+document.addEventListener('click',async e=>{
+  const c=e.target.closest('code[data-copy]'); if(c){try{await navigator.clipboard.writeText(c.dataset.copy);note('Code copied','okc')}catch(err){note('Select and copy the code by hand','err')}return}
+  const b=e.target.closest('button[data-act]'); if(!b)return;
+  try{ if(b.dataset.act==='credit') await api('credit',{code:b.dataset.code,n:+b.dataset.n}); else await api('toggle',{code:b.dataset.code}); note('Saved','okc'); load(); }catch(err){note(err.message,'err')}
+});
+$('#addForm').onsubmit=async e=>{e.preventDefault();try{const r=await api('add',{name:$('#newName').value.trim(),credits:+$('#newCredits').value||0});note(`Added. Access code: ${r.code}`,'okc');$('#newName').value='';load()}catch(err){note(err.message,'err')}};
+function note(t,cls){const m=$('#msg');m.textContent=t;m.className=cls||'';}
+async function boot(){ if(!CODE){$('#gate').hidden=false;return} try{await load();$('#app').hidden=false;setInterval(load,20000)}catch(e){CODE='';try{localStorage.removeItem('wnAdminCode')}catch(x){} $('#gate').hidden=false;$('#gateMsg').textContent=e.message} }
+$('#enter').onclick=async()=>{CODE=$('#code').value.trim();try{localStorage.setItem('wnAdminCode',CODE)}catch(e){} $('#gate').hidden=true; await boot()};
+$('#signout').onclick=e=>{e.preventDefault();CODE='';try{localStorage.removeItem('wnAdminCode')}catch(x){} $('#app').hidden=true;$('#gate').hidden=false;$('#code').value='';$('#gateMsg').textContent=''};
+$('#code').addEventListener('keydown',e=>{if(e.key==='Enter')$('#enter').click()});
+boot();
+</script>

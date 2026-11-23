@@ -1,0 +1,299 @@
+{
+ "_doc": "products: id -> canonical pick-list line and section. rules: first regex (re.search) that matches a product text wins; it yields product ids with units. seen: show keys (mmdd) whose products the rule matched. Edit by hand or with `run.py catalog add`. (Public sample: 15 rules from a real catalog.)",
+ "sections": [
+  "Lip",
+  "Eyes",
+  "Face",
+  "Tools",
+  "Custom bundles",
+  "Giveaways"
+ ],
+ "products": {
+  "giveaway-prize-sephora-item-mini-per-seller": {
+   "name": "Giveaway prize - Sephora item / mini (per seller)",
+   "section": "Giveaways"
+  },
+  "lash-bag-bundle-2-ardell-lash-glues-8-lash-packs-pre-bagged": {
+   "name": "Lash bag bundle: 2 Ardell lash glues + 8 lash packs (pre-bagged, 10 items)",
+   "section": "Custom bundles"
+  },
+  "lash-bag-bundle-6-pack-ardell-glue-lash-packs-pre-bagged": {
+   "name": "Lash bag bundle: 6-pack Ardell glue + lash packs (pre-bagged)",
+   "section": "Custom bundles"
+  },
+  "the-good-patch-be-calm-patches-the-whole-case-20-packs": {
+   "name": "The Good Patch Be Calm patches - the whole case (20+ packs)",
+   "section": "Custom bundles"
+  },
+  "the-good-patch-nite-owl-kids-sleep-patches-15-packs": {
+   "name": "The Good Patch Nite Owl kids sleep patches - 15 packs",
+   "section": "Custom bundles"
+  },
+  "mask-bundle-7-burt-s-bees-watermelon-sheet-masks-1-sooae-gol": {
+   "name": "Mask bundle: 7 Burt's Bees Watermelon sheet masks + 1 SooAE Gold Hydrogel mask",
+   "section": "Custom bundles"
+  },
+  "lip-gloss-mini-bundle-nyx-butter-gloss-nude-l-a-colors-lip-s": {
+   "name": "Lip gloss mini bundle: NYX Butter Gloss nude + L.A. Colors Lip Stain pink + Burt's Bees gloss pink",
+   "section": "Custom bundles"
+  },
+  "one-other-eye-define-brush-set-midnight-collection-5-pc": {
+   "name": "one+other Eye Define Brush Set, Midnight Collection (5 pc)",
+   "section": "Tools"
+  },
+  "one-other-mini-travel-brush-set-luxe-collection-5-pc": {
+   "name": "one+other Mini Travel Brush Set, Luxe Collection (5 pc)",
+   "section": "Tools"
+  },
+  "e-l-f-putty-blush-berry": {
+   "name": "e.l.f. Putty Blush (berry)",
+   "section": "Face"
+  },
+  "e-l-f-luminous-putty-blush-pink": {
+   "name": "e.l.f. Luminous Putty Blush (pink)",
+   "section": "Face"
+  },
+  "e-l-f-luminous-putty-blush-coral-pink": {
+   "name": "e.l.f. Luminous Putty Blush (coral pink)",
+   "section": "Face"
+  },
+  "e-l-f-camo-liquid-blush-magenta-pink": {
+   "name": "e.l.f. Camo Liquid Blush - magenta pink",
+   "section": "Face"
+  },
+  "e-l-f-camo-liquid-blush-terracotta": {
+   "name": "e.l.f. Camo Liquid Blush - terracotta",
+   "section": "Face"
+  },
+  "l-a-girl-lip-plumper-mood-gloss-shimmer": {
+   "name": "L.A. Girl Lip Plumper mood gloss - Shimmer",
+   "section": "Lip"
+  },
+  "l-a-girl-lip-plumper-mood-gloss-black-cherries": {
+   "name": "L.A. Girl Lip Plumper mood gloss - Black Cherries",
+   "section": "Lip"
+  },
+  "w7-bright-eyes-under-eye-brightening-setting-powder": {
+   "name": "W7 Bright Eyes under-eye brightening & setting powder",
+   "section": "Face"
+  },
+  "w7-thick-drip-lip-gloss-brown-nude": {
+   "name": "W7 Thick Drip lip gloss (brown/nude)",
+   "section": "Lip"
+  },
+  "molly-xo-beauty-powder-brush": {
+   "name": "Molly XO Beauty powder brush",
+   "section": "Tools"
+  },
+  "molly-xo-beauty-liquid-eyeshadow-pink-slim-tube-rose-gold-sh": {
+   "name": "Molly XO Beauty liquid eyeshadow, pink slim tube (rose-gold shimmer)",
+   "section": "Eyes"
+  }
+ },
+ "rules": [
+  {
+   "match": "^Giveaway prize",
+   "yields": [
+    [
+     "giveaway-prize-sephora-item-mini-per-seller",
+     1
+    ]
+   ],
+   "seen": [
+    "0924",
+    "0923",
+    "0923s",
+    "0925",
+    "0926"
+   ]
+  },
+  {
+   "match": "^Lash bundle of 10 in bag",
+   "yields": [
+    [
+     "lash-bag-bundle-2-ardell-lash-glues-8-lash-packs-pre-bagged",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^Lash bundle in bag: 6-pack",
+   "yields": [
+    [
+     "lash-bag-bundle-6-pack-ardell-glue-lash-packs-pre-bagged",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^20\\+x The Good Patch Be Calm",
+   "yields": [
+    [
+     "the-good-patch-be-calm-patches-the-whole-case-20-packs",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^15x The Good Patch Nite Owl",
+   "yields": [
+    [
+     "the-good-patch-nite-owl-kids-sleep-patches-15-packs",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^7x Burt.s Bees Hydrating Watermelon",
+   "yields": [
+    [
+     "mask-bundle-7-burt-s-bees-watermelon-sheet-masks-1-sooae-gol",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^3x lip gloss mini bundle",
+   "yields": [
+    [
+     "lip-gloss-mini-bundle-nyx-butter-gloss-nude-l-a-colors-lip-s",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^2x brush sets: one\\+other",
+   "yields": [
+    [
+     "one-other-eye-define-brush-set-midnight-collection-5-pc",
+     1
+    ],
+    [
+     "one-other-mini-travel-brush-set-luxe-collection-5-pc",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^3x e\\.l\\.f\\. blush bundle",
+   "yields": [
+    [
+     "e-l-f-putty-blush-berry",
+     1
+    ],
+    [
+     "e-l-f-luminous-putty-blush-pink",
+     1
+    ],
+    [
+     "e-l-f-luminous-putty-blush-coral-pink",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^2x e\\.l\\.f\\. Camo Liquid Blush",
+   "yields": [
+    [
+     "e-l-f-camo-liquid-blush-magenta-pink",
+     1
+    ],
+    [
+     "e-l-f-camo-liquid-blush-terracotta",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^2x L\\.A\\. Girl Lip Plumper",
+   "yields": [
+    [
+     "l-a-girl-lip-plumper-mood-gloss-shimmer",
+     1
+    ],
+    [
+     "l-a-girl-lip-plumper-mood-gloss-black-cherries",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^2x W7 Bright Eyes",
+   "yields": [
+    [
+     "w7-bright-eyes-under-eye-brightening-setting-powder",
+     2
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^4x W7 Thick Drip",
+   "yields": [
+    [
+     "w7-thick-drip-lip-gloss-brown-nude",
+     4
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^2x Molly XO Beauty powder brush",
+   "yields": [
+    [
+     "molly-xo-beauty-powder-brush",
+     2
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  },
+  {
+   "match": "^Molly XO Beauty liquid eyeshadow",
+   "yields": [
+    [
+     "molly-xo-beauty-liquid-eyeshadow-pink-slim-tube-rose-gold-sh",
+     1
+    ]
+   ],
+   "seen": [
+    "0924"
+   ]
+  }
+ ]
+}

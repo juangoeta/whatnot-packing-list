@@ -1,0 +1,17 @@
+{
+ "_comment": "Flags in notes.tsv are 'category: detail'. revise = the seller must check before sealing (goes in the revise list and the needs-check count). note = shown on the row only.",
+ "revise": {
+  "shade":   "Shade or variant not confirmed",
+  "qty":     "Quantity unclear",
+  "item":    "Item unclear (audio and camera disagree, or pictures do not show it)",
+  "cancel":  "Seller mentioned cancelling",
+  "missing": "No video or audio at the sale",
+  "ghost":   "Sold on stream but no order in Whatnot"
+ },
+ "note": {
+  "giveaway": "Giveaway",
+  "bag":      "Bag or basket contents from the audio",
+  "expiry":   "Expiration date read off the box",
+  "timing":   "Matched by time, number not heard"
+ }
+}

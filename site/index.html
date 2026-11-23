@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Got What</title>
+<meta name="description" content="After your Whatnot live, one click on the Shipments page. You get a packing list that names the real product on every order, with pictures and the mic for the doubtful ones, and printable slips per label.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Static page. No scripts. Tokens like {{PRICE_PER_SHOW}} are placeholders still to fill; see PLACEHOLDERS.md. -->
+<style>
+:root{
+  --bg:#F7F4EF;--panel:#FFFFFF;--ink:#221D25;--muted:#6E6674;--rule:#E1D9D3;--rule-strong:#C9BFB8;
+  --accent:#B5236B;--accent-ink:#8F174F;--accent-soft:#F9E3EC;
+  --warn:#8A5A00;--warn-soft:#FBEFD3;--tape:#F2C94C;--ok:#2E7D4F;--ok-soft:#E3F1E8;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#17131A;--panel:#221D25;--ink:#F1EBF0;--muted:#A79FAB;--rule:#3A323D;--rule-strong:#4E4552;
+    --accent:#D55181;--accent-ink:#F0A3BF;--accent-soft:#3B1F2C;
+    --warn:#F0C36A;--warn-soft:#3B2E14;--tape:#D9B23F;--ok:#7BD39A;--ok-soft:#1E3527;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#17131A;--panel:#221D25;--ink:#F1EBF0;--muted:#A79FAB;--rule:#3A323D;--rule-strong:#4E4552;
+  --accent:#D55181;--accent-ink:#F0A3BF;--accent-soft:#3B1F2C;
+  --warn:#F0C36A;--warn-soft:#3B2E14;--tape:#D9B23F;--ok:#7BD39A;--ok-soft:#1E3527;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:clamp(16px,4vw,40px);padding-block:0 56px;overflow-x:hidden}
+a{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1040px;margin-inline:auto}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance}
+h1{font-size:clamp(40px,7vw,80px);font-weight:800;text-transform:uppercase}
+h2{font-size:clamp(28px,4vw,40px);font-weight:700;text-transform:uppercase}
+h3{font-size:22px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:20px;max-width:34em}
+.muted{color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav{display:flex;gap:4px 18px;flex-wrap:wrap;font-size:15px}
+nav a{text-decoration:none;color:var(--ink);font-weight:600}
+nav a:hover{color:var(--accent-ink)}
+.hero{display:grid;grid-template-columns:1fr;gap:28px;padding-block:44px 40px}
+.hero-text{display:flex;flex-direction:column;gap:20px;max-width:44em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-note{font-size:15px;color:var(--muted)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;font-family:var(--display);font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.03em;padding:12px 22px;border:2px solid var(--accent);background:var(--accent);color:#fff;text-decoration:none;border-radius:4px;line-height:1.1}
+.btn.ghost{background:transparent;color:var(--accent-ink)}
+.btn:hover{filter:brightness(1.08)}
+.shot{background:var(--panel);border:1px solid var(--rule-strong);box-shadow:0 18px 40px -28px rgba(0,0,0,.45);padding:6px;min-width:0}
+.shot img{border:1px solid var(--rule);width:100%;height:auto}
+.hero>*,.feature>*,.get>*,.steps>*,.plans>*,.quotes>*,.contact>*{min-width:0}
+.caption{font-size:14px;color:var(--muted);margin-top:10px;font-style:italic}
+section{padding-block:44px;border-top:1px solid var(--rule)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+.sec-head p{max-width:42em}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+blockquote{margin:0;background:var(--panel);border-left:4px solid var(--accent);padding:16px 18px;font-size:16px;display:flex;flex-direction:column;gap:10px}
+blockquote p{font-style:italic;text-wrap:pretty}
+blockquote cite{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.get{display:grid;grid-template-columns:1fr;gap:40px}
+.feature{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+.feature .txt{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:3px solid var(--ink)}
+.feature .txt p{font-size:16px}
+.feature .txt strong{font-weight:600}
+.feature.phone{grid-template-columns:1fr}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;counter-reset:step}
+.step{background:var(--panel);border:1px solid var(--rule);padding:20px 22px;display:flex;flex-direction:column;gap:8px;counter-increment:step;position:relative}
+.step::before{content:counter(step);font-family:var(--display);font-weight:800;font-size:44px;color:var(--accent);line-height:1}
+.step p{font-size:16px}
+.step code{font-family:var(--mono);font-size:14px;background:var(--accent-soft);padding:1px 6px;border-radius:3px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.plan{background:var(--panel);border:1px solid var(--rule-strong);padding:24px;display:flex;flex-direction:column;gap:14px;position:relative}
+.plan.best{border-color:var(--accent);box-shadow:0 18px 40px -28px rgba(0,0,0,.45)}
+.plan .tag{position:absolute;top:-12px;left:20px;background:var(--tape);color:#221D25;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px}
+.price{font-family:var(--display);font-weight:800;font-size:48px;line-height:1}
+.price small{font-family:var(--body);font-weight:400;font-size:16px;color:var(--muted)}
+.price .ph{font-size:20px;white-space:normal;word-break:break-all}
+.plan ul{margin:0;padding-left:20px;font-size:16px;display:flex;flex-direction:column;gap:4px}
+.plan .btn{align-self:flex-start}
+.note{background:var(--warn-soft);color:var(--warn);border-left:3px solid var(--warn);padding:10px 14px;font-size:15px;max-width:48em}
+.oknote{background:var(--ok-soft);color:var(--ok);border-left:3px solid var(--ok);padding:10px 14px;font-size:15px;max-width:48em}
+.temp{border:2px dashed var(--warn);padding:12px 14px;font-size:15px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.temp b{color:var(--warn);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.temp ol{margin:0;padding-left:20px}
+.faq details{border-top:1px solid var(--rule);padding-block:14px}
+.faq details:last-child{border-bottom:1px solid var(--rule)}
+.faq summary{cursor:pointer;font-family:var(--display);font-size:22px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-weight:800;flex:none}
+.faq details[open] summary::after{content:"\2013"}
+.faq .a{padding-top:10px;max-width:46em;display:flex;flex-direction:column;gap:8px;font-size:16px}
+.contact{background:var(--ink);color:var(--bg);padding:32px;display:grid;grid-template-columns:1fr;gap:16px}
+.contact h2{color:var(--bg)}
+.contact p{color:var(--bg);opacity:.85}
+.contact a{color:var(--tape)}
+footer{padding-top:24px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--muted)}
+/* Placeholders: tokens not decided yet; styled so they cannot be missed */
+.ph{font-family:var(--mono);font-size:.78em;background:var(--tape);color:#221D25;border:2px dashed #8A5A00;border-radius:4px;padding:0 6px;white-space:nowrap;font-weight:500;letter-spacing:0;text-transform:none;vertical-align:middle}
+a[href^="{{"]{outline:3px dashed var(--warn);outline-offset:3px;position:relative}
+a[href^="{{"]::after{content:"link placeholder: " attr(href);display:block;font:500 11px/1.3 var(--mono);letter-spacing:0;text-transform:none;color:#221D25;background:var(--tape);padding:2px 6px;margin-top:6px;white-space:normal;word-break:break-all;border-radius:3px}
+@media (min-width:821px){
+  .hero{grid-template-columns:1fr 1fr;align-items:center}
+  .feature{grid-template-columns:1.25fr .75fr}
+  .feature.rev .shot{order:2}
+  .feature.phone{grid-template-columns:.9fr 1.1fr}
+  .feature.phone .shot{max-width:320px}
+  .contact{grid-template-columns:1.2fr .8fr;align-items:center}
+}
+@media (max-width:820px){
+  body{font-size:16px}
+  .lede{font-size:18px}
+  .price{font-size:40px}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">Who <span>Got</span> What</a>
+    <nav aria-label="Sections">
+      <a href="#what">What you get</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">For Whatnot sellers who run pulls, bundles, singles and buyer's choice</p>
+      <h1>You ran 300 pulls.<br><em>Who got what?</em></h1>
+      <p class="lede">After the show, one click on your Shipments page. Back comes a packing list that names the <strong>real product</strong> on every order, not "Beauty pulls #256", with three pictures and your own words from the mic on the ones worth a second look, printable slips per label, and the cancellations caught when you resend.</p>
+      <div class="cta">
+        <a class="btn" href="#pricing">Get your first list</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+      <p class="hero-note">No login. No password. The extension reads your own Shipments page and sends two things: the show link and the order list. No video touches your computer.</p>
+    </div>
+    <figure class="shot" style="margin:0">
+      <img src="img/list-desktop.jpg" width="1440" height="900" alt="A packing list page: 78 packages, 335 items, 8 need your check. Package 1 lists item numbers, the listing, the time sold, the price, and what to pack: Oakley sunglasses, black frame with blue mirror lenses; Hurley polarized sunglasses, translucent gold round frame; bundles of five OCTO polarized men's sport sunglasses." fetchpriority="high">
+    </figure>
+  </div>
+
+  <section id="why" aria-labelledby="why-h">
+    <div class="sec-head">
+      <p class="eyebrow">Why this exists</p>
+      <h2 id="why-h">Sellers already know the problem</h2>
+      <p>The listing says "#63". The box on the table does not. The night after the show you are the only one who knows which pull went to whom, and the video receipts are not the help they look like. In sellers' own words:</p>
+    </div>
+    <div class="quotes">
+      <blockquote><p>"We're going to spend all day watching every video receipt now just to make sure we get every order right. But this obviously isn't sustainable long term!!!"</p><cite>Seller, 300-item first show, r/whatnotapp</cite></blockquote>
+      <blockquote><p>"THE BIGGEST PROBLEM PEOPLE HAVE IS THEY WATCH THE VIDEO RECEIPT AND DONT REALIZE THE RECEIPT STARTS 30 SECONDS or more BEFORE the auction starts! They then send the wrong thing to the wrong person and get off by one errors."</p><cite>Seller, r/whatnotapp</cite></blockquote>
+      <blockquote><p>"If someone's payment fails, the order disappears from your records... DO NOT rely on video receipts for shipping."</p><cite>Top reply in the same thread</cite></blockquote>
+      <blockquote><p>"Spend the next 2-3 hours matching usernames to items, building piles, and finally packing. It killed my entire night (and the next morning)."</p><cite>Seller, 150-item shows, r/whatnot</cite></blockquote>
+      <blockquote><p>"I don't remember who I ordered something from because they don't put a packing slip in it and those that do list it as random."</p><cite>Buyer, Whatnot Resellers Group</cite></blockquote>
+      <blockquote><p>"I've seen horror stories where some guy sent out 900 orders, and every order was for the previous person, every single one was wrong."</p><cite>Seller, r/whatnotapp</cite></blockquote>
+    </div>
+    <p class="caption">Those failure modes are exactly what this list is built to catch: the receipt that starts early, the payment that failed, the sale that cleared late, the label that got split.</p>
+  </section>
+
+  <section id="what" aria-labelledby="what-h">
+    <div class="sec-head">
+      <p class="eyebrow">What you get</p>
+      <h2 id="what-h">One page, every order named</h2>
+      <p>Built from your show recording and the order list Whatnot actually holds. Opened on a phone at the packing bench, on a laptop, or printed. These are real pages from a real show, with buyer names and order numbers replaced.</p>
+    </div>
+    <div class="get">
+      <div class="feature">
+        <figure class="shot" style="margin:0"><img src="img/evidence-desktop.jpg" width="1440" height="900" loading="lazy" alt="A row for item 41, six-pack of Aquaphor Lip Repair Stick, with its evidence panel open: three pictures from the recording at minus 1, plus 1 and plus 11 seconds showing the six-pack held up to the camera, and a transcript of what was said, with the lines that name the buyer and the item number in bold."></figure>
+        <div class="txt">
+          <h3>Pictures and the mic, on the orders worth a look</h3>
+          <p>Most orders come back as one line of text. The ones where the camera and the mic did not fully agree are marked <strong>Needs your check</strong>, each with the reason, three sharp frames from the recording around the moment of sale, and what was said on the mic with the buyer's name and the item number highlighted. You glance at a handful instead of rewatching the show.</p>
+          <p><strong>Corrected for the receipt offset.</strong> Every stream runs ahead of or behind the receipts by a different amount. The list measures that from your own callouts, so the frames show the sale, not the item before it.</p>
+          <p><strong>Save evidence card.</strong> One picture per order with the frames, the words and the order data, for the day a buyer says the wrong thing arrived.</p>
+        </div>
+      </div>
+      <div class="feature rev">
+        <figure class="shot" style="margin:0"><img src="img/slips-desktop.jpg" width="1440" height="900" loading="lazy" alt="Packing slips, one per shipping label, in label export order: buyer, label 1 of 3, tracking number, then each item number with the real product name and a tick box. Paper options 4 by 6 label or letter."></figure>
+        <div class="txt">
+          <h3>Packing slips with the product on them</h3>
+          <p>One slip per shipping label, in the same order as Whatnot's label export, so the slips come off the printer in the pile order of the labels. The product is written out: brand, item, shade or size, bundle count. Your buyer sees what they bought, not "random".</p>
+          <p><strong>Split shipments handled.</strong> A buyer with two labels gets "label 1 of 2" and "2 of 2", each with its own tracking number, so the right label goes on the right box. The unit is Whatnot's shipment, not the username.</p>
+        </div>
+      </div>
+      <div class="feature phone">
+        <figure class="shot" style="margin:0"><img src="img/list-phone.jpg" width="780" height="1688" loading="lazy" alt="The same packing list on a phone: the stats, then Package 1 with the item numbers, the time sold and tick boxes."></figure>
+        <div class="txt">
+          <h3>Works at the bench</h3>
+          <p><strong>Tick boxes</strong> on every order. The page remembers what you packed on that phone or computer, so you can stop and pick up later.</p>
+          <p><strong>Search and filter</strong> by buyer, item number, product or tracking. Hide packed, needs-check only, hide giveaways, flag reason.</p>
+          <p><strong>Resend after you pack.</strong> Click Send again and the list opens with a "Changed since your last list" box: new orders in green, removed orders in red with "pull this out of the buyer's box if already packed", moved orders with the old and new package, tracking numbers added. Failed payments and late cancellations stop being a surprise.</p>
+          <p><strong>Sales the orders do not show.</strong> A sale heard on the mic with no order in Whatnot (the payment never went through) is listed separately so you do not pack it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="sec-head">
+      <p class="eyebrow">How it works</p>
+      <h2 id="how-h">One click. Then we do the rewatching.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Click Send on Shipments</h3><p>Buy your labels as usual. On Seller Hub &gt; Shipments, pick the show, keep the status on Unfulfilled, and click <code>Send show for packing list</code> in the card at the bottom right. About 25 seconds for a 340-order show.</p></div>
+      <div class="step"><h3>We read the show</h3><p>The service downloads the recording from the link the extension sent, listens to the mic around every sale, pulls the frames, measures the receipt offset, and reconciles every row against the orders Whatnot holds.</p></div>
+      <div class="step"><h3>You get the list</h3><p>A link to the packing list and slips arrives by email. Turnaround is <span class="ph">{{TURNAROUND_SMALL}}</span> for shows up to about 150 orders and <span class="ph">{{TURNAROUND_LARGE}}</span> for bigger ones.</p></div>
+    </div>
+    <p class="caption">Keep doing whatever you do during the show: tags, bins, a helper with a notebook. This is the check at the end, not a replacement for your system.</p>
+  </section>
+
+  <section id="pricing" aria-labelledby="pricing-h">
+    <div class="sec-head">
+      <p class="eyebrow">Subscribe</p>
+      <h2 id="pricing-h">Pick a plan, get your access code</h2>
+      <p>Pay through a hosted checkout. We never see your card. Your access code arrives by email within <span class="ph">{{CODE_WITHIN}}</span> hours; paste it into the extension once and every show after that is one click.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <p class="eyebrow">Per show</p>
+        <p class="price"><span class="ph">{{PRICE_PER_SHOW}}</span> <small>per show, any size</small></p>
+        <ul>
+          <li>One show credit. Resending the same show is free.</li>
+          <li>Packing list, slips, evidence on flagged orders, resend diff.</li>
+          <li>Good for a first try.</li>
+        </ul>
+        <a class="btn" href="{{CHECKOUT_URL_SHOW}}">Buy one show</a>
+      </div>
+      <div class="plan best">
+        <span class="tag">Regular sellers</span>
+        <p class="eyebrow">Monthly</p>
+        <p class="price"><span class="ph">{{PRICE_MONTHLY}}</span> <small>per month, <span class="ph">{{SHOWS_PER_MONTH}}</span> shows</small></p>
+        <ul>
+          <li><span class="ph">{{SHOWS_PER_MONTH}}</span> show credits every month.</li>
+          <li>Everything in per show.</li>
+          <li>Need more in a month? Reply to your code email and credits are added.</li>
+        </ul>
+        <a class="btn" href="{{CHECKOUT_URL_MONTHLY}}">Start monthly</a>
+      </div>
+    </div>
+    <p class="caption">Prices are placeholders until set. One credit covers one show regardless of order count.</p>
+  </section>
+
+  <section id="install" aria-labelledby="install-h">
+    <div class="sec-head">
+      <p class="eyebrow">Install</p>
+      <h2 id="install-h">Your first show in three steps</h2>
+      <p>Chrome on a computer (the Whatnot app does not have the Shipments tools). Five minutes the first time, one click after that.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Install the extension</h3>
+        <p>Add <strong>Whatnot Packing List Sender</strong> from the <a href="{{WEBSTORE_URL}}">Chrome Web Store</a>.</p>
+        <div class="temp"><b>Temporary, until the Web Store listing is live: unpacked zip</b>
+          <ol>
+            <li>Download <a href="{{UNPACKED_ZIP_URL}}">the extension zip</a> and unzip it.</li>
+            <li>Open <code>chrome://extensions</code>, turn on <strong>Developer mode</strong> (top right).</li>
+            <li>Click <strong>Load unpacked</strong> and pick the unzipped <code>extension</code> folder.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="step">
+        <h3>Paste your code in Settings</h3>
+        <p>The welcome page opens on install. Paste the <strong>access code</strong> from your email and click Save. That is the whole setup.</p>
+      </div>
+      <div class="step">
+        <h3>Send the show</h3>
+        <p>Open <code>whatnot.com/dashboard/shipments</code>, pick the show in the first dropdown, keep the status on <strong>Unfulfilled</strong>, and click <strong>Send show for packing list</strong>. Leave the tab open until the card says "Sent". It tells you how many shows your code has left.</p>
+      </div>
+    </div>
+    <figure class="shot" style="margin:28px 0 0"><img src="img/extension-card.jpg" width="1280" height="800" loading="lazy" alt="The Whatnot Shipments page with the Packing list card at the bottom right: a Send show for packing list button, Copy show link, Settings, and the status Sent, 342 orders, 51 packages."></figure>
+    <p class="caption">The card on the Shipments page. It refuses to send a short list: it counts the orders the packages should contain and waits until they are all on the page. Sample page with placeholder buyers.</p>
+    <p style="margin-top:18px"><a href="guide/">Read the seller guide</a>: what each part of the list means, how to resend after packing, and how to check a flagged order against the video receipt yourself.</p>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-h" class="faq">
+    <div class="sec-head">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-h">Questions sellers ask</h2>
+    </div>
+    <details open>
+      <summary>What does it cost?</summary>
+      <div class="a"><p><span class="ph">{{PRICE_PER_SHOW}}</span> for one show, or <span class="ph">{{PRICE_MONTHLY}}</span> a month for <span class="ph">{{SHOWS_PER_MONTH}}</span> shows. A show is a show, whether it had 40 orders or 900. Resending the same show after you pack (to catch cancellations and new tracking numbers) costs nothing.</p></div>
+    </details>
+    <details>
+      <summary>What leaves my computer?</summary>
+      <div class="a">
+        <p>Two things, only when you click Send: the <strong>link to the show recording</strong> that your own Shipments page already holds, and the <strong>order list</strong> shown on that page (buyer username, order number, listing title, price, package, receipt time, tracking number and carrier).</p>
+        <p><strong>No video is downloaded to your computer.</strong> The service fetches the recording from Whatnot's link on its own machine. The extension has no login, no password, cannot read other pages, and can contact only whatnot.com and the Who Got What service.</p>
+        <p>The recording and the order list are kept while your list is being prepared and used for nothing else. Full text: <a href="{{PRIVACY_URL}}">privacy policy</a>.</p>
+      </div>
+    </details>
+    <details>
+      <summary>How long does it take?</summary>
+      <div class="a"><p>Sending takes under a minute on your side. The list comes back in <span class="ph">{{TURNAROUND_SMALL}}</span> for shows up to about 150 orders and <span class="ph">{{TURNAROUND_LARGE}}</span> for bigger shows. Send right after you buy labels so the tracking numbers are on the slips; a resend later refreshes them.</p></div>
+    </details>
+    <details>
+      <summary>What if an order on the list is wrong?</summary>
+      <div class="a">
+        <p>Every order the camera and the mic did not fully agree on is already marked <strong>Needs your check</strong> with the reason, three pictures and the words, so you can decide in seconds before sealing. Giveaways are marked too, because the item on camera at the draw is often not the prize.</p>
+        <p>If something slipped through, reply to your code email or write to <span class="ph">{{SUPPORT_EMAIL}}</span> with the order number. We look at the recording again and send a corrected list. The list also says how it was checked: the measured receipt offset, how many orders matched a callout, how many were matched by time only.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Sellers say "never rely on video receipts for packing". Isn't this that?</summary>
+      <div class="a">
+        <p>They are right about the receipts: the clip starts about 30 seconds early, a failed payment makes the order vanish, a late payment shifts everything, and clicking through 300 clips one at a time is a full day. That advice is about <em>eyeballing single clips with no cross-check</em>.</p>
+        <p>This is the opposite of that. The list starts from the orders Whatnot actually holds, not from the video. It measures the offset between the stream and the receipts from your own callouts instead of trusting the clip start. It reads the words you said at each sale (the buyer's name, the item number, "bundle of three", "the blush one") and matches them to the frames. Sales heard on the mic with no order behind them are listed separately so you do not pack them. And it tells you, order by order, which ones it is sure of and which ones you should look at.</p>
+        <p>Keep tagging, binning or logging during the show if that is your system. This is the record at the end that says what each buyer was promised.</p>
+      </div>
+    </details>
+    <details>
+      <summary>What kind of shows does it work for?</summary>
+      <div class="a"><p>Any show where the listing title does not describe the product: random pulls, numbered singles ("#1 to #200"), mystery bundles, buyer's choice ("vanilla or blush?"), liquidation lots. Beauty, sunglasses and eyewear, cards, clothing, golf balls, snacks have all been through it. It needs you to say the winner's name or the item number on the mic, which most sellers already do. Shows in English for now.</p></div>
+    </details>
+    <details>
+      <summary>Does it change anything in my Whatnot account?</summary>
+      <div class="a"><p>No. It only reads the Shipments page you are already looking at. It cannot buy labels, cancel orders, message buyers or touch listings. Not affiliated with Whatnot.</p></div>
+    </details>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <h2>Try it on your next show</h2>
+        <p style="margin-top:8px">Pick a plan above, paste the code, click Send. Questions first? Write to <a href="mailto:{{SUPPORT_EMAIL}}"><span class="ph">{{SUPPORT_EMAIL}}</span></a>.</p>
+      </div>
+      <div><a class="btn" href="#pricing">See plans</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Who Got What is an independent service and is not affiliated with, endorsed by, or supported by Whatnot, Inc. Screenshots are real pages from a real show with buyer names, order numbers and tracking numbers replaced.</span>
+    <span><a href="{{PRIVACY_URL}}">Privacy policy</a> · <a href="guide/">Seller guide</a> · <span class="ph">{{SITE_DOMAIN}}</span></span>
+  </footer>
+</div>
+</html>

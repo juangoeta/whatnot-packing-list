@@ -1,0 +1,7 @@
+{
+ "note": "P06: phrases in a row's own transcript (P-45..P+35) that mean the seller listed the contents of an opaque bag for minutes before the sale; `lag` then asks `recut` for a P-300..P+25 clip. Whole words, case-insensitive. Bare 'bundle' and 'bag' are left out on purpose: Oct 5, 2026 said 'bundle of five' on 159 of 335 rows, which would blow the 2-minute cap for counted bundles that need no long clip.",
+ "words": ["mystery", "mystery bag", "mystery bundle", "surprise bag", "grab bag", "goodie bag", "goody bag", "bag of goodies",
+           "everything in here", "everything in this bag", "everything in the bag", "everything in this basket", "everything in the basket",
+           "in this bag", "in the bag", "in this basket", "in the basket", "whole bag", "whole basket",
+           "close this bag", "can't even close", "cannot even close"]
+}

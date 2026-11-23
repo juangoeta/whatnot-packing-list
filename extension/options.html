@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings · Who Got What</title>
+<link rel="stylesheet" href="shared.css">
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="icons/icon128.png" width="36" height="36" alt="">
+    <div><div class="name">Who <span>Got</span> What</div><div class="tag">Packing lists for Whatnot sellers</div></div>
+    <div class="spacer"></div>
+    <a href="welcome.html">How it works</a>
+  </header>
+  <h1>Settings</h1>
+  <p class="lede">Your access code is in your welcome email. The show link and order list go to the Who Got What service.</p>
+  <section class="setup">
+    <label for="token">Access code <span>The service accepts sends with this code only.</span></label>
+    <input id="token" autocomplete="off" spellcheck="false" placeholder="paste the code here">
+    <details id="adv"><summary>Advanced: send to a different address</summary>
+      <label for="endpoint"><span>Leave this empty to use the Who Got What service. Only for a self-hosted receiver; the address starts with https://. When you save one, Chrome asks whether the extension may contact that one address. Choose <b>Allow</b>.</span></label>
+      <input id="endpoint" autocomplete="off" spellcheck="false" placeholder="https://">
+    </details>
+    <div class="actions"><button id="save" class="primary">Save</button><span id="msg" class="saved"></span></div>
+    <p class="note">The extension can reach only whatnot.com and the Who Got What service, nothing else. No video touches your computer.</p>
+  </section>
+  <footer class="foot"><span>Who Got What</span><a href="welcome.html">How it works</a></footer>
+</div>
+<script src="options.js"></script>
+</html>

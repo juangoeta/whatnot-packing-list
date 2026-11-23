@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Whatnot Packing List Sender",
+  "version": "0.1.14",
+  "description": "One click on your Whatnot Shipments page sends the show link and order list to your packing-list service. No video is downloaded to your computer.",
+  "minimum_chrome_version": "111",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.whatnot.com/*", "https://your-receiver.example.com/*"],
+  "optional_host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"],
+  "background": { "service_worker": "background.js" },
+  "options_page": "options.html",
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "action": { "default_title": "Who Got What: packing list settings", "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png" } },
+  "content_scripts": [
+    {
+      "matches": ["https://www.whatnot.com/*"],
+      "js": ["collect.js", "panel.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.whatnot.com/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

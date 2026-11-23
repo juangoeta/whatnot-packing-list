@@ -1,0 +1,85 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Packing slips, one per shipping label, written by run.py build from packages.json. Buyers see these:
+     product text only, a small dot on rows the seller still has to check, no flag text, no seller name.
+     Every slip is in the HTML already (article.slip); the script only reorders them and switches the paper size. -->
+<style id="pageStyle">@page{size:4in 6in;margin:0.2in}</style>
+<style>
+:root{color-scheme:light;--ink:#1b1b1f;--muted:#66636b;--rule:#d9d5d0;--bg:#edeae6;--accent:#B5236B}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;font-size:10.5pt;line-height:1.3;padding-inline:16px;padding-block:0 40px}
+.toolbar{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--rule);padding:10px 0 12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-bottom:18px}
+.toolbar h1{font-size:16px;margin:0;font-weight:700}
+.toolbar h1 small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.toolbar label{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.toolbar select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--rule);border-radius:6px;background:#fff;color:var(--ink)}
+.toolbar button{font:inherit;font-size:14px;padding:7px 14px;border:1px solid var(--accent);border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
+.toolbar .hint{font-size:12px;color:var(--muted);flex-basis:100%}
+#slips{display:grid;grid-template-columns:repeat(auto-fill,minmax(4in,1fr));gap:16px;align-items:start}
+.slip{background:#fff;border:1px solid var(--rule);width:100%;max-width:4in;padding:0;margin:0 auto;break-inside:auto}
+.slip table{width:100%;border-collapse:collapse;table-layout:fixed}
+.slip thead{display:table-header-group}
+.slip th{padding:0;text-align:left;font-weight:400}
+.head{padding:8pt 9pt 6pt;border-bottom:2px solid var(--ink)}
+.head .show{font-size:8.5pt;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.head .buyer{font-size:15pt;font-weight:700;line-height:1.15;margin-top:2pt;word-break:break-word}
+.head .lbl{display:inline-block;font-size:8.5pt;font-weight:700;border:1.5px solid var(--ink);border-radius:3px;padding:0 5pt;margin-left:6pt;vertical-align:middle;letter-spacing:.04em;text-transform:uppercase}
+.head .track{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:8.5pt;color:var(--muted);margin-top:3pt;word-break:break-all}
+.head .cols{display:flex;font-size:7.5pt;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:5pt}
+.head .cols span:nth-child(1){width:0.55in}.head .cols span:nth-child(2){flex:1}.head .cols span:nth-child(3){width:0.8in}
+.slip td{padding:4pt 3pt;border-bottom:1px solid var(--rule);vertical-align:top;font-size:10pt}
+.slip tr{break-inside:avoid}
+td.no{width:0.55in;padding-left:9pt;font-weight:700;font-size:11.5pt;line-height:1.15;white-space:nowrap}
+td.no small{display:block;font-weight:400;font-size:6.5pt;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:normal;line-height:1.1}
+td.no .none{color:var(--muted);font-weight:400}
+td.prod{word-break:break-word}
+td.prod .dot{display:inline-block;width:5pt;height:5pt;border-radius:50%;background:var(--ink);margin-right:4pt;vertical-align:middle;position:relative;top:-1pt}
+td.ord{width:0.8in;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:7.5pt;color:var(--muted);white-space:nowrap;padding-top:5pt}
+td.box{width:0.28in;padding-right:9pt;padding-top:4.5pt}
+td.box span{display:block;width:11pt;height:11pt;border:1.2pt solid var(--ink);border-radius:2pt}
+.slip footer{padding:6pt 9pt 8pt;font-size:9pt;color:var(--ink);text-align:center}
+.slip footer:empty{display:none}
+@media print{
+  body{background:#fff;padding:0;font-size:10pt}
+  .toolbar{display:none}
+  #slips{display:block}
+  .slip{border:0;max-width:none;margin:0;background:#fff}
+  body.p46 .slip{break-after:page}
+  body.p46 .slip:last-child{break-after:auto}
+  body.pletter .slip{min-height:4.8in;margin-bottom:0.2in;border-bottom:1px dashed var(--rule);break-inside:avoid}
+  body.pletter .slip:last-child{border-bottom:0}
+}
+</style>
+<div class="toolbar">
+<h1>Packing slips<small>__SHOW__ · __DATE__ · <span id="count">__NSLIPS__</span> labels</small></h1>
+<label>Order <select id="order" aria-label="Order of slips"><option value="username">Username A–Z (label export order)</option><option value="count">Order count, biggest first</option><option value="time">Order time</option></select></label>
+<label>Paper <select id="paper" aria-label="Paper size"><option value="p46">4 × 6 label</option><option value="pletter">Letter, two per sheet</option></select></label>
+<button type="button" id="printBtn">Print</button>
+<span class="hint">One slip per shipping label, in the same order as Whatnot's label export, so the slips come off the printer in the pile order of the labels. A long shipment continues on a second label with the same header. The small dot marks a row to look up on the packing list before packing (a double-check or a giveaway prize).</span>
+</div>
+<div id="slips">
+__SLIPS__
+</div>
+<script>
+const KEY='wn-slips-__KEY__';
+let view={order:'__ORDER__',paper:'p46'};
+try{Object.assign(view,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(view))}catch(e){}}
+const box=document.getElementById('slips');
+const CMP={username:(a,b)=>a.dataset.buyer.localeCompare(b.dataset.buyer)||(+a.dataset.n-+b.dataset.n),
+  count:(a,b)=>(+b.dataset.count-+a.dataset.count)||a.dataset.buyer.localeCompare(b.dataset.buyer)||(+a.dataset.n-+b.dataset.n),
+  time:(a,b)=>(+a.dataset.time-+b.dataset.time)||a.dataset.buyer.localeCompare(b.dataset.buyer)||(+a.dataset.n-+b.dataset.n)};
+function render(){
+  const slips=[...box.querySelectorAll('article.slip')].sort(CMP[view.order]||CMP.username);
+  slips.forEach(s=>box.appendChild(s));
+  document.body.classList.toggle('p46',view.paper==='p46');document.body.classList.toggle('pletter',view.paper==='pletter');
+  document.getElementById('pageStyle').textContent=view.paper==='pletter'?'@page{size:letter;margin:0.4in}':'@page{size:4in 6in;margin:0.2in}';
+  document.getElementById('order').value=view.order;document.getElementById('paper').value=view.paper;
+}
+document.getElementById('order').addEventListener('change',e=>{view.order=e.target.value;save();render();});
+document.getElementById('paper').addEventListener('change',e=>{view.paper=e.target.value;save();render();});
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+render();
+</script>

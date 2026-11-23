@@ -1,0 +1,23 @@
+{
+ "_comment": "run.py chunks sorts every row by its listing title (trailing '#N' item number removed; regexes, case-insensitive). 'review': a random pull, the product is only on the video -> chunkN.txt. 'fixed': the title is the product (matches here and nothing in 'review') -> notes_fixed.tsv, no review. GIVY and $0 rows are giveaways. A title that matches neither list goes to review and chunks names it, so a new seller's naming is one line added here.",
+ "review": [
+  "\\bpulls?\\b",
+  "\\brandom\\b",
+  "\\bmystery\\b",
+  "^snacks?$",
+  "\\bsingles\\b",
+  "\\bliquidation\\b",
+  "\\bgrab bags?\\b",
+  "\\bperfume\\b",
+  "\\bcotton\\b"
+ ],
+ "fixed": [
+  "\\b\\d+[ -]?PACK\\b",
+  "\\bpack of \\d+\\b",
+  "\\bbundles? of \\d+\\b",
+  "\\bcase pack \\d+\\b",
+  "^beekman .*\\b(hand cream|body wash)\\b",
+  "^john frieda frizz ease blowout spray",
+  "\\bscalp massager\\b"
+ ]
+}

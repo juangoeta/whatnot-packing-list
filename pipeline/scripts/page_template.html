@@ -1,0 +1,522 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#FAF7F2;--panel:#FFFFFF;--ink:#221D25;--muted:#6E6674;--rule:#E4DCD4;--accent:#B5236B;--accent-ink:#8F174F;--accent-soft:#F7E3EC;--flag-bg:#FFF3CF;--flag-ink:#7A5200;--flag-edge:#E9C349;--done:#2E7D4F;--done-bg:#E3F1E8;--bad:#B3261E;--bad-ink:#8C1D18;--bad-bg:#FBE9E7;--head:#F2ECE5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--accent:#F06BA8;--accent-ink:#F7A3C9;--accent-soft:#3A1F2E;--flag-bg:#3B3013;--flag-ink:#F4D67A;--flag-edge:#8C6F1A;--done:#7BD39A;--done-bg:#1E3527;--bad:#F28B82;--bad-ink:#F6A9A2;--bad-bg:#3B1F1D;--head:#2A252F}}
+:root[data-theme="dark"]{--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--accent:#F06BA8;--accent-ink:#F7A3C9;--accent-soft:#3A1F2E;--flag-bg:#3B3013;--flag-ink:#F4D67A;--flag-edge:#8C6F1A;--done:#7BD39A;--done-bg:#1E3527;--bad:#F28B82;--bad-ink:#F6A9A2;--bad-bg:#3B1F1D;--head:#2A252F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45;padding-block:0 64px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+header.top{background:var(--bg);border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-block:12px}
+h1{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:28px;letter-spacing:.01em;margin:0;text-wrap:balance;line-height:1}
+h1 small{display:block;font-family:"Source Sans 3",sans-serif;font-weight:400;font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+header.top .wrap{display:block;padding-block:12px 10px}
+.titlebar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:10px}.toolbar+.toolbar{margin-top:8px}
+.grp .sub{font-size:12.5px;color:var(--muted);font-weight:600;margin:0 2px 0 4px;white-space:nowrap}.grp .sub:first-child{margin-left:2px}
+.grp{display:flex;flex-direction:column;gap:4px;background:var(--head);border:1px solid var(--rule);border-radius:10px;padding:6px 8px 7px;min-width:0}
+.grp.grow{flex:1 1 260px}
+.grp .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600;padding-left:2px}
+.grp .ctl{display:flex;align-items:center;gap:6px;min-height:32px}
+input[type=search]{font:inherit;font-size:14px;width:100%;padding:6px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--panel);color:var(--ink);min-width:0}
+.sel{display:flex;align-items:stretch;border:1px solid var(--rule);border-radius:7px;overflow:hidden;background:var(--panel)}
+.sel select{font:inherit;font-size:14px;padding:6px 8px;border:0;background:transparent;color:var(--ink);cursor:pointer;min-width:0}
+.sel .dir{border:0;border-left:1px solid var(--rule);border-radius:0;padding:0 9px;font-size:10px;line-height:1;background:var(--panel);color:var(--muted)}
+.sel .dir:hover{color:var(--accent-ink);background:var(--accent-soft)}
+.sel .dir:disabled{opacity:.4;cursor:default}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{position:relative;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--ink);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:5px 11px 5px 9px;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,color .15s}
+.chip input{position:absolute;opacity:0;width:0;height:0;margin:0}
+.chip .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--muted);flex:none;transition:background .15s,border-color .15s}
+.chip:hover{border-color:var(--accent)}
+.chip:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.chip:has(input:checked) .dot{background:var(--accent);border-color:var(--accent)}
+.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]:focus,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.actions{display:flex;gap:8px;align-self:flex-start;margin-top:2px}
+button.print,a.print{white-space:nowrap;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink);text-decoration:none;line-height:normal;display:inline-block}
+a.print{border-color:var(--accent);color:var(--accent-ink)}
+a.print:hover{background:var(--accent-soft)}
+@media (max-width:640px){.titlebar{flex-wrap:wrap}.grp{flex:1 1 100%}.grp .ctl{flex-wrap:wrap}#fbuyer{width:100%}}
+/* Filters (D06): the buyer box, the chip counts, and the "Showing" row of active filters with Clear all */
+.grp[hidden]{display:none}
+#fbuyer{width:200px}
+.chip small{color:var(--muted);font-weight:400;font-size:12px;font-variant-numeric:tabular-nums}
+.chip:has(input:checked) small{color:var(--accent-ink)}
+.active{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}
+.active[hidden]{display:none}
+.active .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600;margin-right:4px}
+.achip{display:inline-flex;align-items:center;gap:4px;font-size:13px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent);border-radius:999px;padding:3px 5px 3px 10px;font-weight:600}
+.achip button{border:0;background:none;color:inherit;padding:0 5px;font-size:15px;line-height:1.2;cursor:pointer;border-radius:50%}
+.achip button:hover{background:var(--accent);color:#fff}
+.active .clear{font-size:13px;padding:3px 10px;border-radius:999px;margin-left:4px}
+.stat b small{font-size:18px;color:var(--muted);font-weight:600}
+td.pkgcol{white-space:nowrap}td.pkgcol b{color:var(--accent);font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:18px}td.pkgcol small{display:block;color:var(--muted);font-size:12px}
+body.flat section.pkg h2{font-size:22px}
+button{font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-block:22px 8px}
+.stat{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.stat b{display:block;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.stat.flag b{color:var(--flag-ink)}.stat.done b{color:var(--done)}
+.check{background:var(--panel);border:1px solid var(--rule);border-left:4px solid var(--done);border-radius:8px;padding:12px 18px 10px;margin:8px 0 14px}
+.check h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--done);font-weight:600}
+.check ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px 28px}
+.check li{padding:5px 0;font-size:15px;line-height:1.45;color:var(--muted);border-bottom:1px dotted var(--rule)}
+.check li b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.check li.warn b{color:var(--flag-ink)}
+.check{margin:34px 0 0}
+.check .fine{margin:14px auto 2px;font-size:14px;line-height:1.5;color:var(--muted);max-width:90ch;text-align:center}
+.howto{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:14px 18px 6px;margin:8px 0 26px}
+.howto h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.howto ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px 28px}
+.howto li{position:relative;padding:6px 0 8px 18px;font-size:15px;line-height:1.45;color:var(--muted);border-bottom:1px dotted var(--rule)}
+.howto li::before{content:"";position:absolute;left:2px;top:14px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.howto li b{color:var(--ink);font-weight:600}
+details.diff{background:var(--panel);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:8px;padding:10px 16px 8px;margin:8px 0 18px;color:var(--ink)}
+details.diff summary{cursor:pointer;font-weight:600;color:var(--accent-ink)}
+details.diff summary small{font-weight:400;color:var(--muted);margin-left:8px}
+details.diff ul{list-style:none;margin:10px 0 4px;padding:0;display:grid;gap:6px}
+details.diff li{padding:7px 12px;border-radius:6px;font-size:15px;line-height:1.45;border-left:4px solid var(--rule);background:var(--head);max-width:100ch}
+details.diff li.new{border-left-color:var(--done);background:var(--done-bg)}
+details.diff li.removed{border-left-color:var(--bad);background:var(--bad-bg)}
+details.diff li.moved{border-left-color:var(--accent);background:var(--accent-soft)}
+details.diff li a{color:inherit;font-weight:600;text-decoration:underline dotted}
+details.diff li .ord{color:var(--muted);font-size:13px}
+body.hide-col-order details.diff li .ord{display:none}
+details.diff li em{font-style:normal;font-weight:600}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:1px 7px;margin-right:6px;vertical-align:middle;line-height:1.5}
+.tag.new{background:var(--done);color:#fff}.tag.removed{background:var(--bad);color:#fff}.tag.moved{background:var(--accent);color:#fff}
+tr.new td{background:var(--done-bg)}tr.new td.prod{box-shadow:inset 4px 0 0 var(--done);padding-left:12px}
+tr.moved td{background:var(--accent-soft)}
+.pill.moved{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent)}
+details.ghosts{background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:10px 16px;margin-bottom:28px}
+details.ghosts summary{cursor:pointer;font-weight:600;color:var(--accent-ink)}
+details.ghosts ul{margin:10px 0 4px;padding-left:0;list-style:none;display:grid;gap:10px}
+details.ghosts li{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:start;border-bottom:1px dotted var(--rule);padding-bottom:10px}
+details.ghosts li img{width:72px;height:auto;border-radius:6px;border:1px solid var(--rule);cursor:zoom-in;display:block}
+details.ghosts li .nopic{width:72px;height:96px;border-radius:6px;background:var(--head);border:1px dashed var(--rule)}
+details.ghosts li b{color:var(--ink)}
+details.ghosts li .q{font-size:14px;color:var(--muted);margin-top:2px}
+details.ghosts li .q em{color:var(--ink);font-style:normal;font-weight:600}
+details.ghosts p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+details.flags{background:var(--flag-bg);border:1px solid var(--flag-edge);border-radius:8px;padding:10px 16px;margin-bottom:28px;color:var(--ink)}
+details.flags summary{cursor:pointer;font-weight:600;color:var(--flag-ink)}
+details.flags ul{margin:10px 0 4px;padding-left:20px}
+details.flags li{margin:6px 0;max-width:90ch}
+details.flags li a{color:inherit;text-decoration:underline dotted;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:14px}
+details.flags li strong{color:var(--flag-ink)}
+details.flags li .ord{color:var(--muted);font-size:13px}
+body.hide-col-order details.flags li .ord{display:none}
+/* P12: one banner per off-by-one chain, in place of one line per shifted row */
+details.flags li.chain{list-style:none;margin:8px 0 10px -20px;padding:8px 12px;background:var(--panel);border:1px solid var(--flag-edge);border-left:4px solid var(--bad);border-radius:6px;max-width:none}
+details.flags li.chain .tag.shift{background:var(--bad);color:#fff}
+details.flags li.chain a{font-family:inherit;font-size:inherit;font-weight:600}
+details.flags li.chain .why{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+section.pkg{margin-bottom:34px;break-inside:avoid}
+section.pkg h2{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:26px;margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:10px 0 8px;border-bottom:3px solid var(--accent)}
+section.pkg h2 .n{color:var(--accent);font-variant-numeric:tabular-nums}
+section.pkg h2 .meta{font-family:"Source Sans 3",sans-serif;font-size:14px;font-weight:400;color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+.split{display:inline-block;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent);border-radius:4px;padding:2px 9px;font-family:"Source Sans 3",sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.track{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:8px 0 6px;font-size:14px;color:var(--muted)}
+.track code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);background:var(--head);padding:2px 8px;border-radius:4px;letter-spacing:.04em;user-select:all}
+.track button{padding:3px 9px;font-size:12px}
+details.splits{background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:10px 16px;margin-bottom:18px;color:var(--ink)}
+details.splits summary{cursor:pointer;font-weight:600;color:var(--accent-ink)}
+details.splits ul{margin:10px 0 4px;padding-left:20px}details.splits li{margin:6px 0}details.splits a{color:var(--accent-ink);font-weight:600;text-decoration:underline dotted}details.splits code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:13.5px}
+section.pkg.is-split h2{border-bottom-color:var(--accent-ink)}
+section.pkg h2 .prog{font-family:"Source Sans 3",sans-serif;font-size:13px;font-weight:600;color:var(--done);background:var(--done-bg);border-radius:999px;padding:2px 10px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:8px 8px;background:var(--head);white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.chk{width:34px;padding-top:11px}td.chk input{width:18px;height:18px;accent-color:var(--done);cursor:pointer}
+td.item{white-space:nowrap;line-height:1.1}td.item b{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:24px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:.01em}td.item small{display:block;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}td.item .none{color:var(--muted)}
+th .colx{border:0;background:none;padding:2px 3px;margin-left:6px;width:22px;height:16px;border-radius:4px;color:var(--muted);cursor:pointer;line-height:0;vertical-align:middle;display:inline-flex;align-items:center;justify-content:center}
+th .colx svg{width:16px;height:9px;display:block;fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round}
+th .colx:hover{color:var(--accent-ink);background:var(--accent-soft)}
+th.collapsed{width:1%;white-space:nowrap}
+th.collapsed .ttl{opacity:.5}
+th.collapsed .colx{color:var(--accent-ink)}
+td.mono,th.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:13.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.time{white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.2}td.time small{display:block;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:2px}
+td.price{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}th.price{text-align:right}
+td.prod{min-width:300px}
+td.note{min-width:180px;font-size:14px}
+body.hide-col-note td.note{min-width:0}
+.pill{display:inline-block;background:var(--flag-bg);color:var(--flag-ink);border:1px solid var(--flag-edge);border-radius:4px;padding:2px 8px;font-weight:600;font-size:13px;line-height:1.3}
+tr.flagged td.prod{box-shadow:inset 4px 0 0 var(--flag-edge);padding-left:12px}
+tr.done td{color:var(--muted)}tr.done td.prod{text-decoration:line-through;text-decoration-color:var(--muted)}
+tr.hide{display:none}
+section.pkg.empty{display:none}
+button.ev{display:block;margin-top:6px;padding:3px 9px;font-size:12px;color:var(--flag-ink);border-color:var(--flag-edge);background:var(--flag-bg)}
+tr.evrow td{padding:0 0 14px;border-bottom:1px solid var(--rule);background:var(--head)}
+.evpanel{display:grid;grid-template-columns:minmax(280px,3fr) minmax(220px,2fr);gap:14px 20px;padding:12px 14px}
+.evpanel .frames{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.evpanel .fr{display:block;position:relative;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#000;cursor:zoom-in;padding:0}
+.evpanel .fr img{width:100%;height:auto;display:block}
+.evpanel .fr .off{position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;padding:1px 6px;border-radius:4px}
+.evpanel .sheet{width:100%;border:1px solid var(--rule);border-radius:6px;background-repeat:no-repeat;cursor:zoom-in}
+dialog.zoom{border:0;padding:0;background:transparent;max-width:96vw;max-height:96vh}
+dialog.zoom::backdrop{background:rgba(0,0,0,.85)}
+dialog.zoom img{max-width:96vw;max-height:92vh;display:block;border-radius:6px}
+dialog.zoom .sheet{width:min(96vw,1440px);border-radius:6px;background-repeat:no-repeat}
+dialog.zoom .cap{color:#fff;text-align:center;font-size:13px;padding:6px}
+.evpanel .cap{font-size:12px;color:var(--muted);margin-top:6px}
+.evpanel .cap a{color:var(--accent-ink)}
+button.card{display:inline-block;margin-top:8px;padding:4px 10px;font-size:12px;color:var(--accent-ink);border-color:var(--accent)}
+.flagtools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 8px;font-size:13px;color:var(--muted)}
+.flagtools button{padding:4px 10px;font-size:12px;color:var(--accent-ink);border-color:var(--accent)}
+dialog.card{border:0;padding:0;background:var(--panel);color:var(--ink);border-radius:8px;max-width:min(96vw,760px);width:min(96vw,760px);max-height:96vh;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+dialog.card::backdrop{background:rgba(0,0,0,.7)}
+dialog.card .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--rule);font-size:14px}
+dialog.card .bar b{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-weight:500;flex:1}
+dialog.card .bar a{font-size:13px;padding:5px 10px;border:1px solid var(--accent);border-radius:6px;color:var(--accent-ink);text-decoration:none}
+dialog.card .body{max-height:calc(96vh - 110px);overflow:auto;padding:12px 14px;background:var(--bg)}
+dialog.card img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:6px}
+dialog.card .hint{font-size:13px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--rule);margin:0}
+dialog.card .hint code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;user-select:all;background:var(--head);padding:1px 5px;border-radius:4px}
+.evpanel ol{list-style:none;margin:0;padding:0;font-size:14px;line-height:1.4}
+.evpanel ol li{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:3px 0;border-bottom:1px dotted var(--rule)}
+.evpanel ol li .t{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.evpanel ol li.hit{font-weight:600;color:var(--ink)}
+.evpanel ol li.hit .t{color:var(--flag-ink)}
+.evpanel h4{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+@media (max-width:640px){.evpanel{grid-template-columns:1fr}}
+.nores{color:var(--muted);padding:30px 0;display:none}
+@media (max-width:640px){h1{font-size:24px}th.t,td.t{display:none}}
+@media print{.toolbar,.howto,.stat.done,td.chk,th.chk,tr.evrow,button.ev,.actions,th .colx,.flagtools{display:none}th.collapsed{display:none}body{background:#fff;color:#000}section.pkg{page-break-inside:avoid}tr.flagged td.prod{box-shadow:none;border-left:4px solid #E9C349}tr.new td.prod{box-shadow:none;border-left:4px solid #2E7D4F}}
+@media (prefers-reduced-motion:no-preference){tr td{transition:color .15s}}
+</style>
+<header class="top"><div class="wrap">
+<div class="titlebar"><h1>__TITLE__<small>Whatnot show "__SHOW__" · __DATE__ · unfulfilled orders</small></h1><div class="actions"><a class="print" href="packing_slips.html" target="_blank" rel="noopener" title="One slip per shipping label with the real product, in label order">Print slips</a><button id="printBtn" class="print" type="button">Print</button></div></div>
+<div class="toolbar">
+<div class="grp grow"><span class="lbl">Search</span><div class="ctl"><input type="search" id="q" placeholder="Item # (e.g. #256), buyer, product, tracking…" aria-label="Search"></div></div>
+<!-- D06 Buyer: type-ahead over this show's buyers (datalist filled in the script) -->
+<div class="grp"><span class="lbl">Buyer</span><div class="ctl"><input type="search" id="fbuyer" list="buyerList" placeholder="Pick a buyer…" aria-label="Show one buyer's packages" autocomplete="off"><datalist id="buyerList"></datalist></div></div>
+<div class="grp"><span class="lbl">Sort</span><div class="ctl"><span class="sub">Packages</span><div class="sel"><select id="psort" aria-label="Sort packages"><option value="time">Sale time</option><option value="buyer">Buyer A–Z (label print order)</option><option value="items">Item count</option><option value="total">Most expensive first</option><option value="flag">Needs check first</option><option value="nolabel">No label first</option></select><button type="button" id="pdir" class="dir" title="Flip direction" aria-label="Flip package order">▼</button></div><span class="sub">Orders</span><div class="sel"><select id="osort" aria-label="Sort orders"><option value="time">Sale time</option><option value="item">Item #</option><option value="price">Price</option><option value="flag">Flagged first</option></select><button type="button" id="odir" class="dir" title="Flip direction" aria-label="Flip order order">▼</button></div></div></div>
+</div>
+<div class="toolbar">
+<div class="grp"><span class="lbl">Filter</span><div class="ctl chips"><label class="chip"><input type="checkbox" id="hideDone"><span class="dot"></span>Hide packed</label><label class="chip"><input type="checkbox" id="onlyFlag"><span class="dot"></span>Needs check only</label><!-- D06 Hide giveaways --><label class="chip"><input type="checkbox" id="fgivy"><span class="dot"></span>Hide giveaways</label></div></div>
+<!-- D06 Flag reason: one chip per P08 category present in the show (built in the script; group hidden when there are none) -->
+<div class="grp grow" id="fcatGrp"><span class="lbl">Flag reason</span><div class="ctl chips" id="fcats"></div></div>
+</div>
+<div class="active" id="active" hidden><span class="lbl">Showing</span><span id="achips" style="display:contents"></span><button type="button" class="clear" id="clearAll">Clear all</button></div>
+</div></header>
+<main class="wrap">
+<div class="stats">
+<div class="stat"><b>__NPK__</b><span>packages</span></div>
+<div class="stat"><b>__NIT__</b><span>items</span></div>
+<div class="stat flag"><b>__NFL__</b><span>need your check</span></div>
+<div class="stat"><b>$__TOT__</b><span>item sales</span></div>
+<div class="stat"><b>__NSPLIT__</b><span>buyers with 2+ labels</span></div>
+<div class="stat done"><b id="doneCount">0</b><span>packed (this device)</span></div>
+<div class="stat" id="showingStat" hidden><b id="showingN"></b><span id="showingOf"></span></div>
+</div>
+<details class="diff" id="diffBox" open><summary id="diffSum"></summary><ul id="diffList"></ul></details>
+<section class="howto" aria-label="How to read this list"><h3>How to read this list</h3><ul>
+<li><b>The big pink number is the item number</b> from the listing title ("Beauty pulls #42" is item 42). If the show used more than one listing name, the name appears in small letters under the number so two #42s are not mixed up.</li>
+<li><b>Order numbers are hidden.</b> Click the arrows next to the dimmed "Order" column name to show them when a label is in doubt. The arrows next to any column name fold it away or bring it back.</li>
+<li><b>The small grey time under "Sold at" is the position in the Whatnot replay</b> (h:mm:ss from the start of the recording). Drag the replay scrubber there to watch the sale.</li>
+<li><b>"What to pack" is what was on camera</b> when the countdown hit zero, checked against what you said on the mic: brand, shade, bundle size.</li>
+<li><b>Each package is one shipping label.</b> A buyer with two labels shows "label 1 of 2" and "2 of 2" with their own tracking numbers.</li>
+<li><b>Yellow rows need your check</b> before sealing. "Show evidence" opens three pictures from the recording and what was said on the mic.</li>
+<li><b>Put a check mark in the little white box as you pack.</b> It stays checked when you close and reopen this page on the same phone or computer; a different device starts with the boxes empty.</li>
+</ul></section>
+<details class="splits" id="splitBox" open><summary id="splitSum"></summary><ul id="splitList"></ul></details>
+<details class="ghosts" id="ghostBox" open><summary id="ghostSum"></summary><p>Heard on the mic as a sale, but Whatnot has no order for it: the payment did not go through or it was cancelled during the show. The item is probably still in your pile. Do not pack it; check the buyer in Whatnot if in doubt.</p><ul id="ghostList"></ul></details>
+<details class="flags" open><summary>__NFL__ orders to double-check before sealing</summary><div class="flagtools" id="flagTools" hidden><button type="button" id="cardsAll">Save all flagged as evidence cards (zip)</button><span>One PNG per flagged order: pictures, what was said, order data. For a Whatnot claim.</span></div><ul id="flagList"></ul></details>
+<div id="pkgs"></div>
+<div class="nores" id="nores">Nothing matches that search or those filters.</div>
+<section class="check" aria-label="How this list was checked"><h3>How this list was checked</h3><ul id="checkList"></ul>
+<p class="fine">Whatnot's video receipts do not always show the right product: the clip starts about 30 seconds before the sale and the recording runs behind or ahead of real time by a different amount on every stream, sometimes drifting during the show. This list corrects for that by measuring the offset from your own callouts, cross-checking every order against the pictures and what was said on the mic, and reconciling with the orders Whatnot actually holds. Those checks catch most mistakes, but a 100% match cannot be guaranteed, so the rows marked for a double-check deserve a look before sealing.</p></section>
+</main>
+<dialog class="zoom" id="zoom"><div id="zoomBody"></div><div class="cap" id="zoomCap"></div></dialog>
+<dialog class="card" id="cardDlg"><div class="bar"><b id="cardName"></b><a id="cardDl" download hidden>Download PNG</a><button type="button" id="cardClose">Close</button></div><div class="body" id="cardBody"></div><p class="hint" id="cardHint"></p></dialog>
+<script>
+const DATA=__DATA__;
+const GHOSTS=__GHOSTS__;
+const CHECK=__CHECK__;
+const DIFF=__DIFF__;
+const CHAINS=__CHAINS__;
+const META=__META__;
+(function(){const c=CHECK,li=[];const n=x=>`<b>${x}</b>`;
+ li.push(`${n(c.orders)} orders in ${n(c.packages)} packages, read straight from your Whatnot Shipments page.`);
+ if(c.heard!=null) li.push(`${n(c.heard)} of ${c.orders} sales confirmed by your own voice on the mic (buyer and item number called out). The other ${n(c.orders-c.heard)} were matched by picture.`);
+ if(c.lag!=null){const drift=(c.lagMax!=null&&c.lagMin!=null&&c.lagMax-c.lagMin>6)?` (it drifted from ${c.lagMin>=0?'+':''}${Math.round(c.lagMin)} s to ${c.lagMax>=0?'+':''}${Math.round(c.lagMax)} s during the show)`:'';
+  li.push(`The recording ran ${n((c.lag>=0?'+':'')+c.lag.toFixed(1)+' s')} off real time${drift}. Every picture is taken at the corrected moment, not where the receipt starts.`);}
+ else li.push(`The recording offset was <b>not measured</b> for this list; pictures use the receipt timing as is.`);
+ li.push(c.ghosts==null?`Sales heard on the mic without an order were <b>not checked</b> for this list.`:c.ghosts?`<span class="warn">${n(c.ghosts)} sale${c.ghosts>1?'s':''} heard on the mic with no order in Whatnot</span>, listed below so they are not packed.`:`${n('0')} sales heard on the mic without an order in Whatnot.`);
+ if(c.silent!=null) li.push(c.silent?`${n(c.silent)} order${c.silent>1?'s':''} had nothing on the mic around the sale (no buyer, no item number); matched by picture only. Giveaways and orders where only the name or only the number was heard are not counted.`:`Every priced order had its buyer or item number heard on the mic.`);
+ if(c.parts>1) li.push(`The replay was restarted ${n(c.parts-1)} time${c.parts>2?'s':''} (${c.parts} parts); replay positions count from the first start.`);
+ if(c.gaps!=null) li.push(c.gaps?`<span class="warn">The recording has ${n(c.gaps)} gap${c.gaps>1?'s':''} with no video and no audio</span>; ${n(c.inGaps)} order${c.inGaps==1?'':'s'} fall in ${c.gaps>1?'them':'it'} and could not be checked (flagged "missing").`:`The recording has ${n('0')} gaps (video and audio present around every sale).`);
+ if(c.chains!=null) li.push(c.chains?`<span class="warn">${n(c.chains)} stretch${c.chains>1?'es':''} of orders ran one item number off against the mic</span>: several orders in a row where you called a number one away from the order's. Orders may have shifted; the double-check list says which two to look at.`:`${n('0')} stretches of orders ran one item number off against the mic (no sign of orders shifting).`);
+ li.push(`${n(c.revise)} orders where the picture or the audio left a doubt are in the double-check list.`+(c.unreviewed?` <span class="warn">${n(c.unreviewed)} orders were not reviewed.</span>`:''));
+ document.getElementById('checkList').innerHTML=li.map(x=>`<li class="${/class=\"warn\"/.test(x)?'warn':''}">${x}</li>`).join('');})();
+const SERIES=[...new Set(DATA.flatMap(p=>p.items.filter(it=>it.itemNo!=null).map(it=>it.series)))];const MULTI=SERIES.length>1;
+const itemCell=it=>it.itemNo==null?`<span class="none">—</span>`:`<b>#${it.itemNo}</b>${MULTI?`<small>${esc(it.series)}</small>`:''}`;
+const itemTag=it=>it.itemNo==null?esc(it.listing):`#${it.itemNo}${MULTI?' '+esc(it.series):''}`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const hms=s=>{s=Math.max(0,Math.floor(s||0));const p2=x=>String(x).padStart(2,'0');return `${Math.floor(s/3600)}:${p2(Math.floor(s%3600/60))}:${p2(s%60)}`;};   // D02 replay position
+// Changed since your last list (R08): what the last resend added, removed or moved, from the receiver's diff.json.
+(function(){const box=document.getElementById('diffBox'),d=DIFF;if(!d){box.hidden=true;return;}
+ const tag=e=>e.itemNo==null?esc(e.listing):`#${e.itemNo}${MULTI?' '+esc(e.series||''):''}`;
+ const ord=e=>`<span class="ord">(order ${e.order})</span>`;
+ let when='';if(d.at){const t=new Date(d.at);if(!isNaN(t))when=' resent '+t.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+ document.getElementById('diffSum').innerHTML=`Changed since your last list: ${esc(d.summary||'')}<small>${esc(when)}</small>`;
+ const li=[];
+ d.added.forEach(e=>li.push(`<li class="new"><span class="tag new">New</span><a href="#o${e.order}">Pkg ${e.package} · ${esc(e.pkgBuyer)} · ${tag(e)}</a> ${ord(e)} — ${e.product==='(not reviewed)'?'<em>not reviewed yet</em>, pack from the listing title':esc(e.product)}</li>`));
+ d.removed.forEach(e=>li.push(`<li class="removed"><span class="tag removed">Removed</span><em>${esc(e.buyer)} · ${tag(e)}</em> ${ord(e)} — ${esc(e.product||e.listing)}. <em>Pull this out of ${esc(e.buyer)}'s box${e.package?' (was Package '+e.package+')':''} if already packed.</em></li>`));
+ d.moved.forEach(e=>li.push(`<li class="moved"><span class="tag moved">Moved</span><a href="#o${e.order}">${tag(e)}</a> ${ord(e)} — ${esc(e.product)}: was Package ${e.fromPackage||'?'} (${esc(e.fromBuyer||'')}), now <em>Package ${e.package} (${esc(e.pkgBuyer)})</em></li>`));
+ if(d.tracking)li.push(`<li><em>${d.tracking}</em> package${d.tracking>1?'s':''} got a tracking number.</li>`);
+ document.getElementById('diffList').innerHTML=li.join('');})();
+let done={};try{done=JSON.parse(localStorage.getItem('wn-packed-__KEY__')||'{}')}catch(e){done={}}
+function save(){try{localStorage.setItem('wn-packed-__KEY__',JSON.stringify(done))}catch(e){}}
+const pk=document.getElementById('pkgs'), fl=document.getElementById('flagList');
+/*CARD-BEGIN*/
+// Evidence card (D12): the layout below is shared with scripts/evidence_card.py (Pillow). Same input -> same ops. Keep them in step;
+// `python3 evidence_card.py --check-layout <order>` diffs the two. Pure functions only between the CARD markers (node runs them).
+const offTxt=o=>`${o>=0?'+':''}${Math.round(o)} s`;
+const CARD={W:960,PAD:40,GAP:50,FW:260,FH:462,
+ font:{h1:['bold',40,'sans'],h2:['',24,'sans'],lab:['bold',18,'sans'],val:['',30,'sans'],prod:['bold',30,'sans'],tx:['',24,'sans'],txb:['bold',24,'sans'],tt:['',22,'mono'],chip:['bold',24,'mono'],foot:['',20,'sans']},
+ col:{bg:'#FAF7F2',ink:'#221D25',muted:'#6E6674',rule:'#E4DCD4',hit:'#FFF3CF',hitInk:'#7A5200',black:'#000000',white:'#FFFFFF',chip:'#000000'}};
+function wrapText(s,mx){const out=[];let line='';for(let w of String(s).split(/\s+/).filter(Boolean)){while(w.length>mx){if(line){out.push(line);line='';}out.push(w.slice(0,mx));w=w.slice(mx);}if(!line)line=w;else if(line.length+1+w.length<=mx)line+=' '+w;else{out.push(line);line=w;}}if(line)out.push(line);return out.length?out:[''];}
+const clip=(s,n)=>{s=String(s);return s.length>n?s.slice(0,n-1)+'…':s;};
+function cardLayout(m){const C=CARD,ops=[],X=C.PAD,IW=C.W-2*C.PAD;let y=C.PAD;
+ const text=(s,fk,color,x,yy)=>ops.push(['text',x,yy,s,fk,color]);const base=(yy,size)=>yy+Math.round(size*0.78);
+ wrapText(m.show,40).forEach(l=>{text(l,'h1',C.col.ink,X,base(y,40));y+=48;});
+ y+=4;text(`Whatnot show · ${m.date} · evidence for order ${m.order}`,'h2',C.col.muted,X,base(y,24));y+=32;
+ y+=18;ops.push(['rect',X,y,IW,2,C.col.rule]);y+=22;
+ const CW=Math.floor((IW-C.GAP)/2);const facts=[['Buyer',m.buyer],['Order #',m.order],['Item',m.itemTag],['Sold at',m.time],['Package',m.pkg],['Tracking',m.tracking||'(no label yet)']];
+ facts.forEach(([k,v],i)=>{const cx=X+(i%2)*(CW+C.GAP),cy=y+Math.floor(i/2)*92;text(k.toUpperCase(),'lab',C.col.muted,cx,base(cy,18));text(clip(v,26),'val',C.col.ink,cx,base(cy+26,30));});
+ y+=3*92;
+ text('WHAT WAS SOLD','lab',C.col.muted,X,base(y,18));y+=26;
+ wrapText(m.product,53).forEach(l=>{text(l,'prod',C.col.ink,X,base(y,30));y+=38;});
+ if(m.flagText){y+=6;text(clip(m.flagText,80),'tx',C.col.hitInk,X,base(y,24));y+=32;}
+ y+=22;
+ text('PICTURES FROM THE RECORDING AT THE SALE (seconds from the countdown)','lab',C.col.muted,X,base(y,18));y+=30;
+ for(let k=0;k<3;k++){const fx=X+k*(C.FW+C.GAP);ops.push(['rect',fx,y,C.FW,C.FH,C.col.black]);const f=m.frames[k];
+  if(f){ops.push(['img',k,fx,y,C.FW,C.FH]);const lbl=offTxt(f.off),cw=lbl.length*15+24;ops.push(['rect',fx+10,y+C.FH-10-36,cw,36,C.col.chip]);text(lbl,'chip',C.col.white,fx+22,base(y+C.FH-10-36+6,24));}
+  else text('no picture','tx',C.col.muted,fx+90,base(y+Math.floor(C.FH/2)-12,24));}
+ y+=C.FH+30;
+ text('WHAT WAS SAID (seconds from the countdown; the callout is highlighted)','lab',C.col.muted,X,base(y,18));y+=30;
+ if(m.transcript.length){m.transcript.forEach(([o,txt,hit])=>{const lines=wrapText(txt,67),h=lines.length*32+8;if(hit)ops.push(['rect',X-8,y,IW+16,h,C.col.hit]);
+  text(offTxt(o),'tt',hit?C.col.hitInk:C.col.muted,X,base(y+4,22));lines.forEach((l,i)=>text(l,hit?'txb':'tx',hit?C.col.hitInk:C.col.ink,X+100,base(y+4+i*32,24)));y+=h;});}
+ else{text('No transcript saved for this order.','tx',C.col.muted,X,base(y,24));y+=32;}
+ y+=22;ops.push(['rect',X,y,IW,2,C.col.rule]);y+=18;
+ const foot='Frames from the show recording at the moment of sale, corrected for the receipt offset'+(m.lag!=null?` (${offTxt(m.lag)} on this stream)`:'')+". Transcript from the seller's mic. Order data from the Whatnot Shipments page.";
+ wrapText(foot,91).forEach(l=>{text(l,'foot',C.col.muted,X,base(y,20));y+=26;});
+ y+=C.PAD-8;return {ops,H:y};}
+/*CARD-END*/
+function cardModel(p,it){const ev=it.evidence||{};const frames=ev.frames?ev.frames.slice(0,3).map(f=>({off:f.off})):(ev.offs||[]).slice(0,3).map(o=>({off:o}));
+ const lvl=it.flagLevel||'',flag=lvl==='revise'?'Marked for a double-check: '+(it.flagText||it.flag||''):lvl==='note'?'Note: '+(it.flag||''):'';
+ return {show:META.show||'',date:META.date||'',buyer:p.buyer,order:String(it.order),itemTag:it.itemNo==null?it.listing:`#${it.itemNo} · ${it.listing}`,time:`${it.time||''} · $${it.price.toFixed(2)}`,
+  pkg:`Package ${p.num}`+(p.split?` · label ${p.split}`:''),tracking:p.tracking||'',product:it.product||'',flagText:flag,frames,transcript:ev.transcript||[],lag:CHECK&&CHECK.lag!=null?CHECK.lag:null};}
+const cardBtn=it=>`<button type="button" class="card" data-card="${it.order}" title="One PNG with the pictures, what was said and the order data, for a Whatnot claim">Save evidence card</button>`;
+function evRow(it){const ev=it.evidence;let img;
+  if(ev.frames&&ev.frames.length){img=`<div><div class="frames">${ev.frames.map(f=>`<button type="button" class="fr" data-zoom="${esc(f.file)}" data-cap="Order ${it.order} · ${offTxt(f.off)} from the countdown"><img src="${esc(f.file)}" alt="Picture ${offTxt(f.off)} around the sale of order ${it.order}" loading="lazy"><span class="off">${offTxt(f.off)}</span></button>`).join('')}</div><div class="cap">Pictures from the show recording, seconds from the countdown hitting zero (corrected for this stream's receipt offset).</div>${cardBtn(it)}</div>`;}
+  else if(ev.sheet){const pos=ev.n>1?(ev.idx/(ev.n-1)*100):0;const offs=(ev.offs||[]).map(offTxt).join(' · ');
+    img=`<div><div class="sheet" role="img" tabindex="0" aria-label="Pictures around the sale of order ${it.order}" data-zoomsheet="${esc(ev.sheet)}" data-pos="${pos}" data-ar="${ev.w}/${ev.h}" data-cap="Order ${it.order} · ${offs}" style="aspect-ratio:${ev.w}/${ev.h};background-image:url('${esc(ev.sheet)}');background-size:100% auto;background-position:0 ${pos}%"></div><div class="cap">${offs?offs+' from the countdown hitting zero. ':''}Pictures from the show recording, corrected for this stream's receipt offset.</div>${cardBtn(it)}</div>`;}
+  else img='<div class="cap">No pictures saved for this order.</div>';
+  const tr=ev.transcript&&ev.transcript.length?`<div><h4>What was said (seconds from the countdown)</h4><ol>${ev.transcript.map(([o,txt,hit])=>`<li class="${hit?'hit':''}"><span class="t">${offTxt(o)}</span><span>${esc(txt)}</span></li>`).join('')}</ol></div>`:'<div class="cap">No transcript saved for this order.</div>';
+  return `<tr class="evrow" data-for="${it.order}" hidden><td colspan="9"><div class="evpanel">${img}${tr}</div></td></tr>`;}
+let flagHtml='';
+// P12: each off-by-one chain is one banner linking its first and last order; rows whose only flag is the chain are not listed again.
+const SER=[...new Set(DATA.flatMap(p=>p.items.filter(it=>it.itemNo!=null).map(it=>it.series)))].length>1;
+const endLink=e=>e?`<a href="#o${e.order}">#${e.itemNo} (Pkg ${e.pkg} · ${esc(e.buyer)})</a>`:'?';
+CHAINS.forEach(c=>{flagHtml+=`<li class="chain"><span class="tag shift">Shifted?</span>${SER?esc(c.series)+' ':'Items '}${endLink(c.first)} to ${endLink(c.last)}: these ${c.n} orders may be shifted by one.<span class="why">For ${c.heard} of them the mic called ${c.dir>0?'one number higher':'one number lower'} than the order says. Check the first and the last; if both are wrong, every order in between is too.</span></li>`;});
+const chainOnly=it=>it.chain!=null&&it.flagText.indexOf('possible off-by-one')===0;
+DATA.forEach(p=>p.items.forEach(it=>{if(it.flagLevel==='revise'&&!chainOnly(it)) flagHtml+=`<li><a href="#o${it.order}">Pkg ${p.num} · ${esc(p.buyer)} · ${itemTag(it)}</a> <span class="ord">(order ${it.order})</span> — ${esc(it.product)} → <strong>${esc(it.flagText)}</strong></li>`;}));
+fl.innerHTML=flagHtml;
+// View state: package sort, order sort, directions, grouped or flat. Remembered per show.
+const COLS_LIST=['item','order','listing','time','price','note'];
+const VKEY='wn-view-__KEY__';
+let view={psort:'time',pdir:1,osort:'time',odir:1,flat:false,hidden:[],filters:{}};
+try{Object.assign(view,JSON.parse(localStorage.getItem(VKEY)||'{}'))}catch(e){}
+view.hidden=(view.hidden||[]).filter(c=>c!=='order'&&COLS_LIST.includes(c)); view.hidden.push('order'); view.flat=false;
+// Filters (D06). Each filter is four short pieces, all tagged with its name: a default in view.filters, a control
+// in the toolbar, a predicate in PREDS (null = inactive, else (p,it)=>bool), and a chip in activeChips(). They AND
+// together with search, "Hide packed" and "Needs check only" inside refresh(); delete the four pieces to drop one.
+view.filters=Object.assign({buyer:'',cats:[],noGivy:false},view.filters||{});delete view.filters.sizes;
+const ROW={};DATA.forEach(p=>p.items.forEach(it=>ROW[it.order]={p,it}));const NIT=Object.keys(ROW).length;
+// D06 Buyer: exact buyer when the typed text is one of this show's buyers (picked from the list), else a contains-match
+const BUYERS=[...new Set(DATA.map(p=>p.buyer))].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
+document.getElementById('buyerList').innerHTML=BUYERS.map(b=>`<option value="${esc(b)}">`).join('');
+const buyerPred=()=>{const f=view.filters.buyer.trim().toLowerCase();if(!f)return null;const exact=BUYERS.some(b=>b.toLowerCase()===f);return (p,it)=>exact?p.buyer.toLowerCase()===f:p.buyer.toLowerCase().includes(f);};
+document.getElementById('fbuyer').addEventListener('input',e=>{view.filters.buyer=e.target.value;saveView();refresh();});
+// D06 Flag reason: chips for the P08 categories present in this show, revise categories first, each with its count. Two chips = either.
+const CAT_SHORT={shade:'Shade',qty:'Quantity',item:'Item unclear',cancel:'Cancel mentioned',missing:'No video',ghost:'Ghost sale',giveaway:'Giveaway',bag:'Bag contents',expiry:'Expiration',timing:'Matched by time'};
+const CATS={};DATA.forEach(p=>p.items.forEach(it=>{if(it.flagCat){const c=CATS[it.flagCat]=CATS[it.flagCat]||{n:0,level:it.flagLevel,label:it.flagLabel};c.n++;}}));
+const catLabel=k=>CAT_SHORT[k]||(CATS[k]&&CATS[k].label)||k;
+(function(){const keys=Object.keys(CATS).sort((a,b)=>(CATS[a].level==='revise'?0:1)-(CATS[b].level==='revise'?0:1)||CATS[b].n-CATS[a].n);
+ if(!keys.length){document.getElementById('fcatGrp').hidden=true;return;}
+ document.getElementById('fcats').innerHTML=keys.map(k=>`<label class="chip" title="${esc(CATS[k].label)}"><input type="checkbox" data-cat="${esc(k)}"><span class="dot"></span>${esc(catLabel(k))} <small>${CATS[k].n}</small></label>`).join('');})();
+const catPred=()=>{const c=view.filters.cats;return c.length?(p,it)=>c.includes(it.flagCat):null;};
+document.getElementById('fcats').addEventListener('change',e=>{const k=e.target.dataset.cat;if(!k)return;view.filters.cats=e.target.checked?view.filters.cats.concat(k):view.filters.cats.filter(x=>x!==k);saveView();refresh();});
+// D06 Hide giveaways: rows build marked as giveaways (GIVY listing or $0), in both the grouped and the flat view
+const givyPred=()=>view.filters.noGivy?(p,it)=>!it.giveaway:null;
+document.getElementById('fgivy').addEventListener('change',e=>{view.filters.noGivy=e.target.checked;saveView();refresh();});
+const PREDS=[buyerPred,catPred,givyPred];
+function syncFilterUI(){const F=view.filters;
+  document.getElementById('fbuyer').value=F.buyer;
+  document.querySelectorAll('#fcats input').forEach(i=>i.checked=F.cats.includes(i.dataset.cat));
+  document.getElementById('fgivy').checked=F.noGivy;}
+// The "Showing" row: one removable chip per thing that narrows the list (search and the two view chips included), plus Clear all.
+function activeChips(){const F=view.filters,c=[],q=document.getElementById('q'),hd=document.getElementById('hideDone'),of=document.getElementById('onlyFlag');
+  if(q.value.trim())c.push([`Search: ${q.value.trim()}`,()=>q.value='']);
+  if(hd.checked)c.push(['Hide packed',()=>hd.checked=false]);
+  if(of.checked)c.push(['Needs check only',()=>of.checked=false]);
+  if(F.buyer.trim())c.push([`Buyer: ${F.buyer.trim()}`,()=>F.buyer='']);                                   // D06 Buyer
+  F.cats.forEach(k=>c.push([`Flag: ${catLabel(k)}`,()=>F.cats=F.cats.filter(x=>x!==k)]));                  // D06 Flag reason
+  if(F.noGivy)c.push(['Giveaways hidden',()=>F.noGivy=false]);                                             // D06 Hide giveaways
+  return c;}
+let CHIPS=[];
+document.getElementById('achips').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;CHIPS[+b.dataset.i][1]();saveView();syncFilterUI();refresh();});
+document.getElementById('clearAll').addEventListener('click',()=>{CHIPS.forEach(([,clear])=>clear());saveView();syncFilterUI();refresh();});
+function saveView(){try{localStorage.setItem(VKEY,JSON.stringify(Object.assign({},view,{hidden:view.hidden.filter(c=>c!=='order')})))}catch(e){}}
+// hidden columns: one CSS rule per column, toggled through a class on <body>
+// a hidden column keeps its cells (so header and body stay aligned) but empties them: no text, no children, no width
+const colStyle=document.createElement('style');colStyle.textContent=COLS_LIST.map(c=>`body.hide-col-${c} td[data-col="${c}"]{font-size:0;line-height:0;color:transparent;padding-left:0;padding-right:0;width:1%;white-space:nowrap;min-width:0;box-shadow:none}body.hide-col-${c} td[data-col="${c}"] *{display:none}`).join('');document.head.appendChild(colStyle);
+function applyCols(){
+  COLS_LIST.forEach(c=>document.body.classList.toggle('hide-col-'+c,view.hidden.includes(c)));
+  document.querySelectorAll('th[data-col]').forEach(h=>{const c=h.dataset.col,hid=view.hidden.includes(c),b=h.querySelector('.colx');h.classList.toggle('collapsed',hid);b.innerHTML=hid?ICO_EXPAND:ICO_COLLAPSE;b.title=(hid?'Show ':'Hide ')+COLS[c];b.setAttribute('aria-label',b.title);});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button.colx');if(!b)return;const c=b.dataset.col;
+  view.hidden=view.hidden.includes(c)?view.hidden.filter(x=>x!==c):view.hidden.concat(c);saveView();applyCols();});
+const pTime=p=>Math.min(...p.items.map(it=>it.at==null?Infinity:it.at));
+const PCMP={time:(a,b)=>pTime(a)-pTime(b),buyer:(a,b)=>a.buyer.toLowerCase().localeCompare(b.buyer.toLowerCase())||pTime(a)-pTime(b),
+  items:(a,b)=>b.items.length-a.items.length||pTime(a)-pTime(b),total:(a,b)=>b.total-a.total||pTime(a)-pTime(b),
+  flag:(a,b)=>(b.items.some(i=>i.flagLevel==='revise')?1:0)-(a.items.some(i=>i.flagLevel==='revise')?1:0)||pTime(a)-pTime(b),nolabel:(a,b)=>(a.tracking?1:0)-(b.tracking?1:0)||pTime(a)-pTime(b)};
+const OCMP={time:(a,b)=>(a.it.at==null?Infinity:a.it.at)-(b.it.at==null?Infinity:b.it.at),item:(a,b)=>(a.it.itemNo==null?1e9:a.it.itemNo)-(b.it.itemNo==null?1e9:b.it.itemNo)||(a.it.series||'').localeCompare(b.it.series||''),
+  price:(a,b)=>b.it.price-a.it.price,flag:(a,b)=>(b.it.flagLevel==='revise'?2:b.it.flagLevel==='note'?1:0)-(a.it.flagLevel==='revise'?2:a.it.flagLevel==='note'?1:0)};
+function rowHtml(p,it,flat){
+  const ev=it.evidence||null;
+  const chg=it.change==='NEW'?'new':it.change==='MOVED'?'moved':'';
+  const f=(chg==='moved'?`<span class="pill moved">Moved from Pkg ${it.movedFrom&&it.movedFrom.package||'?'}${it.movedFrom&&it.movedFrom.buyer?' · '+esc(it.movedFrom.buyer):''}</span> `:'')+(it.flagLevel==='revise'?`<span class="pill">${esc(it.flagText)}</span>`:'')+(ev?`<button type="button" class="ev" data-ev="${it.order}" aria-expanded="false">Show evidence</button>`:'');
+  const pkgcell=flat?`<td class="pkgcol"><b>Pkg ${p.num}</b><small>${esc(p.buyer)}${p.split?' · label '+esc(p.split):''}</small></td>`:'';
+  return `<tr id="o${it.order}" class="${it.flagLevel==='revise'?'flagged':''} ${chg}" data-order="${it.order}" data-text="${esc((p.buyer+' '+it.order+' '+it.listing+' '+it.product+' '+it.flag+' '+(p.tracking||'')+' '+chg).toLowerCase())}" data-item="${it.itemNo==null?'':it.itemNo}">
+<td class="chk"><input type="checkbox" id="c${it.order}" aria-label="Packed order ${it.order}" ${done[it.order]?'checked':''}></td>
+<td class="item" data-col="item">${itemCell(it)}</td>${pkgcell}<td class="mono order" data-col="order">${it.order}</td><td class="mono t" data-col="listing">${esc(it.listing.replace('Random pulls beauty ','RPB '))}</td><td class="time" data-col="time">${esc(it.time)}<small title="Position in the Whatnot replay">${it.at==null?'':hms(it.at)}</small></td><td class="price" data-col="price">$${it.price.toFixed(2)}</td><td class="prod">${chg==='new'?'<span class="tag new">New</span>':''}${esc(it.product)}</td><td class="note" data-col="note">${f}</td></tr>`+(ev?evRow(it):'');}
+const COLS={item:'Item #',order:'Order #',listing:'Listing',time:'Sold at',price:'Price',note:'Needs your check'};
+const ICO_COLLAPSE='<svg viewBox="0 0 16 9" aria-hidden="true"><path d="M1 1.2 L6.2 4.5 L1 7.8 Z"/><path d="M15 1.2 L9.8 4.5 L15 7.8 Z"/></svg>';
+const ICO_EXPAND='<svg viewBox="0 0 16 9" aria-hidden="true"><path d="M6.2 1.2 L1 4.5 L6.2 7.8 Z"/><path d="M9.8 1.2 L15 4.5 L9.8 7.8 Z"/></svg>';
+const th=(col,cls)=>`<th class="${cls}" data-col="${col}"><span class="ttl">${COLS[col]}</span><button type="button" class="colx" data-col="${col}" title="Hide ${COLS[col]}" aria-label="Hide ${COLS[col]} column">${ICO_COLLAPSE}</button></th>`;
+const headHtml=flat=>`<thead><tr><th class="chk"></th>${th('item','item')}${flat?'<th>Package</th>':''}${th('order','mono order')}${th('listing','mono t')}${th('time','time')}${th('price','price')}<th>What to pack</th>${th('note','')}</tr></thead>`;
+function sortedPackages(){const ps=DATA.slice().sort(PCMP[view.psort]||PCMP.time);if(view.pdir<0)ps.reverse();return ps;}
+function sortedOrders(list){const l=list.slice().sort(OCMP[view.osort]||OCMP.time);if(view.odir<0)l.reverse();return l;}
+function render(){
+  document.body.classList.toggle('flat',view.flat);
+  if(view.flat){
+    const all=[];DATA.forEach(p=>p.items.forEach(it=>all.push({p,it})));
+    const rows=sortedOrders(all).map(({p,it})=>rowHtml(p,it,true)).join('');
+    pk.innerHTML=`<section class="pkg" id="pflat"><h2><span class="n">All orders</span> one list <span class="prog" data-prog></span><span class="meta">${all.length} items · ${DATA.length} packages</span></h2><div class="tbl"><table>${headHtml(true)}<tbody>${rows}</tbody></table></div></section>`;
+  }else{
+    pk.innerHTML=sortedPackages().map(p=>{
+      const rows=sortedOrders(p.items.map(it=>({p,it}))).map(({it})=>rowHtml(p,it,false)).join('');
+      return `<section class="pkg ${p.split?'is-split':''}" id="p${p.num}" data-buyer="${esc(p.buyer)}"><h2><span class="n">Package ${p.num}</span> ${esc(p.buyer)} ${p.split?`<span class="split">Split shipment · label ${esc(p.split)}</span>`:''} <span class="prog" data-prog></span><span class="meta">${p.items.length} item${p.items.length>1?'s':''} · $${p.total.toFixed(2)} · shipment ${p.shipment}</span></h2>
+<div class="track">Tracking <code>${esc(p.tracking||'(no label yet)')}</code> <span>${esc((p.courier||'')+' '+(p.method||''))}</span> ${p.tracking?`<button type="button" class="copy" data-t="${esc(p.tracking)}">Copy</button>`:''}</div>
+<div class="tbl"><table>${headHtml(false)}<tbody>${rows}</tbody></table></div></section>`;}).join('');
+  }
+  document.getElementById('psort').value=view.psort;document.getElementById('osort').value=view.osort;
+  document.getElementById('pdir').textContent=view.pdir<0?'▲':'▼';document.getElementById('odir').textContent=view.odir<0?'▲':'▼';
+  document.getElementById('pdir').disabled=view.flat;document.getElementById('psort').disabled=view.flat;
+  applyCols();
+  syncFilterUI();
+  refresh();
+}
+document.getElementById('psort').addEventListener('change',e=>{view.psort=e.target.value;view.pdir=1;saveView();render();});
+document.getElementById('osort').addEventListener('change',e=>{view.osort=e.target.value;view.odir=1;saveView();render();});
+document.getElementById('pdir').addEventListener('click',()=>{view.pdir=-view.pdir;saveView();render();});
+document.getElementById('odir').addEventListener('click',()=>{view.odir=-view.odir;saveView();render();});
+(function(){const box=document.getElementById('ghostBox');if(!GHOSTS.length){box.hidden=true;return;}
+ document.getElementById('ghostSum').textContent=GHOSTS.length+(GHOSTS.length>1?' sales heard on the mic have no order in Whatnot':' sale heard on the mic has no order in Whatnot')+' - do not pack';
+ document.getElementById('ghostList').innerHTML=GHOSTS.map((g,k)=>`<li>${g.pic?`<button type="button" class="fr" style="padding:0;border:0;background:none" data-zoom="${esc(g.pic)}" data-cap="Heard ${esc(g.user||g.heard)} #${esc(g.num)} at ${esc(g.time)}"><img src="${esc(g.pic)}" alt="On camera just before the callout" loading="lazy"></button>`:'<div class="nopic"></div>'}<div><b>${esc(g.user||('heard as "'+g.heard+'"'))} · #${esc(g.num)}</b> <span class="t" style="color:var(--muted)">${esc(g.time)}</span><div class="q">“${esc(g.text)}”</div></div></li>`).join('');})();
+(function(){const by={};DATA.forEach(p=>{(by[p.buyer]=by[p.buyer]||[]).push(p)});const sp=Object.entries(by).filter(([b,ps])=>ps.length>1);
+ const box=document.getElementById('splitBox');if(!sp.length){box.hidden=true;return;}
+ document.getElementById('splitSum').textContent=sp.length+(sp.length>1?' buyers have':' buyer has')+' more than one shipping label - match each label to its box';
+ document.getElementById('splitList').innerHTML=sp.map(([b,ps])=>`<li><strong>${esc(b)}</strong> - ${ps.length} labels: `+ps.map(p=>`<a href="#p${p.num}">label ${esc(p.split)} = Package ${p.num}</a> (${p.items.length} item${p.items.length>1?'s':''}, tracking <code>${esc(p.tracking)}</code>)`).join('; ')+'</li>').join('');})();
+document.addEventListener('click',e=>{const t=e.target.closest('button.ev');if(!t)return;const row=document.querySelector(`tr.evrow[data-for="${t.dataset.ev}"]`);if(!row)return;
+ const open=row.hidden;row.hidden=!open;t.textContent=open?'Hide evidence':'Show evidence';t.setAttribute('aria-expanded',String(open));});
+const zoom=document.getElementById('zoom');
+document.addEventListener('click',e=>{const f=e.target.closest('[data-zoom],[data-zoomsheet]');if(!f)return;const body=document.getElementById('zoomBody');
+ if(f.dataset.zoom){body.innerHTML=`<img src="${esc(f.dataset.zoom)}" alt="">`;}
+ else{body.innerHTML=`<div class="sheet" style="aspect-ratio:${f.dataset.ar};background-image:url('${esc(f.dataset.zoomsheet)}');background-size:100% auto;background-position:0 ${f.dataset.pos}%"></div>`;}
+ document.getElementById('zoomCap').textContent=f.dataset.cap||'';zoom.showModal();});
+zoom.addEventListener('click',()=>zoom.close());
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-zoomsheet]'))e.target.click();});
+document.addEventListener('click',e=>{const b=e.target.closest('button.copy');if(!b)return;const t=b.dataset.t;const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>{});}else{const r=document.createRange();r.selectNodeContents(b.previousElementSibling.previousElementSibling);const s=getSelection();s.removeAllRanges();s.addRange(r);}});
+function refresh(){
+  const q=document.getElementById('q').value.trim().toLowerCase(), hd=document.getElementById('hideDone').checked, of=document.getElementById('onlyFlag').checked;
+  const preds=PREDS.map(f=>f()).filter(Boolean), im=q.match(/^#\s*(\d+)$/);   // D06 filters active right now
+  let any=false, dc=0, shown=0; const shownPk=new Set();
+  document.querySelectorAll('section.pkg').forEach(s=>{
+    let vis=0, packed=0, n=0;
+    s.querySelectorAll('tbody tr[data-order]').forEach(tr=>{
+      n++; const o=tr.dataset.order, isDone=!!done[o], r=ROW[o]; if(isDone){packed++;dc++}
+      tr.classList.toggle('done',isDone);
+      const show=(!q||(im?tr.dataset.item===im[1]:tr.dataset.text.includes(q)))&&(!hd||!isDone)&&(!of||tr.classList.contains('flagged'))&&preds.every(f=>f(r.p,r.it));
+      tr.classList.toggle('hide',!show); if(show){vis++;shown++;shownPk.add(r.p.num);}
+      const ev=tr.nextElementSibling; if(ev&&ev.classList.contains('evrow')){ev.classList.toggle('hide',!show);}
+    });
+    s.querySelector('[data-prog]').textContent=packed?`${packed}/${n} packed`:'';
+    s.classList.toggle('empty',vis===0); if(vis) any=true;
+  });
+  document.getElementById('doneCount').textContent=dc;
+  document.getElementById('nores').style.display=any?'none':'block';
+  // active-filter chips and the "showing N of M" stat, only while something narrows the list
+  CHIPS=activeChips();
+  document.getElementById('achips').innerHTML=CHIPS.map(([label],i)=>`<span class="achip">${esc(label)}<button type="button" data-i="${i}" title="Remove this filter" aria-label="Remove filter ${esc(label)}">×</button></span>`).join('');
+  document.getElementById('active').hidden=!CHIPS.length;
+  const st=document.getElementById('showingStat');st.hidden=!CHIPS.length;
+  document.getElementById('showingN').innerHTML=`${shown} <small>of ${NIT}</small>`;
+  document.getElementById('showingOf').textContent=`items showing · ${shownPk.size} of ${DATA.length} packages`;
+}
+pk.addEventListener('change',e=>{if(e.target.type==='checkbox'){const o=e.target.closest('tr').dataset.order; if(e.target.checked)done[o]=1; else delete done[o]; save(); refresh();}});
+['q','hideDone','onlyFlag'].forEach(id=>document.getElementById(id).addEventListener('input',refresh));
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+// ---- Evidence card: canvas render, download (Desktop copy) or dialog with "long-press to save" (published artifact blocks downloads) ----
+const CAN_DL=location.protocol==='file:'||!/(^|\.)claude\.ai$/i.test(location.hostname);
+const cardDlg=document.getElementById('cardDlg');
+function loadImg(src){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>rej(new Error('could not load '+src));im.src=src;});}
+async function cardImages(ev){if(ev.frames&&ev.frames.length){const ims=await Promise.all(ev.frames.slice(0,3).map(f=>loadImg(f.file).catch(()=>null)));return ims.map(im=>im?{img:im,rect:[0,0,im.naturalWidth,im.naturalHeight]}:null);}
+ if(ev.sheet){const im=await loadImg(ev.sheet),fw=ev.w/3;return Array.from({length:ev.k||3},(_,c)=>({img:im,rect:[c*fw,ev.idx*ev.h,fw,ev.h]}));}return [];}
+function paintCard(cv,lay,imgs){cv.width=CARD.W;cv.height=lay.H;const g=cv.getContext('2d');g.fillStyle=CARD.col.bg;g.fillRect(0,0,cv.width,cv.height);g.textBaseline='alphabetic';
+ for(const op of lay.ops){if(op[0]==='rect'){g.fillStyle=op[5];g.fillRect(op[1],op[2],op[3],op[4]);}
+  else if(op[0]==='text'){const f=CARD.font[op[4]];g.font=`${f[0]} ${f[1]}px ${f[2]==='mono'?'Menlo,Consolas,monospace':'Helvetica,Arial,sans-serif'}`;g.fillStyle=op[5];g.fillText(op[3],op[1],op[2]);}
+  else if(op[0]==='img'){const im=imgs[op[1]];if(!im)continue;const [sx,sy,sw,sh]=im.rect,s=Math.min(op[4]/sw,op[5]/sh),dw=Math.round(sw*s),dh=Math.round(sh*s);g.drawImage(im.img,sx,sy,sw,sh,op[2]+Math.floor((op[4]-dw)/2),op[3]+Math.floor((op[5]-dh)/2),dw,dh);}}}
+async function makeCard(p,it){const m=cardModel(p,it),imgs=await cardImages(it.evidence||{}),cv=document.createElement('canvas');paintCard(cv,cardLayout(m),imgs);
+ const blob=await new Promise((res,rej)=>{try{cv.toBlob(b=>b?res(b):rej(new Error('the browser returned no image')),'image/png');}catch(e){rej(e);}});return {blob,name:`evidence-${it.order}.png`};}
+function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},3000);}
+function showCard(name,blob,err){const body=document.getElementById('cardBody'),a=document.getElementById('cardDl'),hint=document.getElementById('cardHint');document.getElementById('cardName').textContent=name;
+ if(err){body.innerHTML=`<p style="margin:0">${esc(err)}</p>`;a.hidden=true;
+  hint.innerHTML=/security|tainted|insecure/i.test(err)?`A page opened from a file cannot save its pictures in this browser. Make the card from the show folder instead: <code>python3 ~/whatnot-packing-extension/pipeline/scripts/run.py evidence-card ${esc(name.replace(/^evidence-|\.png$/g,''))}</code>`:'';}
+ else{const url=URL.createObjectURL(blob);body.innerHTML=`<img src="${url}" alt="Evidence card ${esc(name)}">`;a.href=url;a.download=name;a.hidden=!CAN_DL;
+  hint.textContent=CAN_DL?`Saved as ${name} (${(blob.size/1e6).toFixed(1)} MB). Attach it to the Whatnot claim.`:`Long-press (phone) or right-click (computer) the picture and choose "Save image" to keep it as ${name}. ${(blob.size/1e6).toFixed(1)} MB.`;}
+ cardDlg.showModal();}
+document.getElementById('cardClose').addEventListener('click',()=>cardDlg.close());
+cardDlg.addEventListener('click',e=>{if(e.target===cardDlg)cardDlg.close();});
+document.addEventListener('click',async e=>{const b=e.target.closest('button.card');if(!b)return;const r=ROW[b.dataset.card];if(!r)return;b.disabled=true;b.textContent='Making the card…';
+ try{const {blob,name}=await makeCard(r.p,r.it);if(CAN_DL)dl(blob,name);showCard(name,blob);}catch(err){showCard(`evidence-${b.dataset.card}.png`,null,String(err&&err.message||err));}
+ b.disabled=false;b.textContent='Save evidence card';});
+// Save all flagged: one zip (stored, no compression) of every revise-flag row's card. Desktop copy only; downloads do not work in the published artifact.
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+function crc32(u){let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=CRC_T[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+function zipStore(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;const d=new Date(),dt=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF,dd=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF;
+ const u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255],u16=v=>[v&255,(v>>>8)&255];
+ for(const f of files){const n=enc.encode(f.name),c=crc32(f.data),L=f.data.length;
+  const lh=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(dt),...u16(dd),...u32(c),...u32(L),...u32(L),...u16(n.length),...u16(0),...n]);parts.push(lh,f.data);
+  cd.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(dt),...u16(dd),...u32(c),...u32(L),...u32(L),...u16(n.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off),...n]));off+=lh.length+L;}
+ const cdLen=cd.reduce((s,a)=>s+a.length,0),end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(cdLen),...u32(off),...u16(0)]);
+ return new Blob([...parts,...cd,end],{type:'application/zip'});}
+(function(){const tools=document.getElementById('flagTools'),btn=document.getElementById('cardsAll');const todo=[];DATA.forEach(p=>p.items.forEach(it=>{if(it.flagLevel==='revise'&&it.evidence&&(it.evidence.frames||it.evidence.sheet))todo.push({p,it});}));
+ tools.hidden=!(CAN_DL&&todo.length);if(tools.hidden)return;
+ btn.addEventListener('click',async()=>{btn.disabled=true;const files=[];let err=null;
+  for(let i=0;i<todo.length;i++){btn.textContent=`Making card ${i+1} of ${todo.length}…`;try{const {blob,name}=await makeCard(todo[i].p,todo[i].it);files.push({name,data:new Uint8Array(await blob.arrayBuffer())});}catch(e){err=String(e&&e.message||e);break;}}
+  if(err)showCard('evidence-cards.zip',null,err);else{const z=zipStore(files);dl(z,`evidence-cards-__KEY__.zip`);btn.textContent=`Saved ${files.length} card${files.length>1?"s":""} (${(z.size/1e6).toFixed(1)} MB)`;setTimeout(()=>{btn.textContent='Save all flagged as evidence cards (zip)';btn.disabled=false;},4000);return;}
+  btn.textContent='Save all flagged as evidence cards (zip)';btn.disabled=false;});})();
+render();
+</script>

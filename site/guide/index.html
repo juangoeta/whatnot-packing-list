@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seller Guide</title>
+<meta name="description" content="Your first show with Who Got What: install, paste the code, send the show, then how to read the packing list, resend after packing, and check a flagged order against the video receipt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Static page. No scripts. {{...}} tokens are placeholders; see ../PLACEHOLDERS.md. -->
+<style>
+:root{--bg:#F7F4EF;--panel:#fff;--ink:#221D25;--muted:#6E6674;--rule:#E1D9D3;--rule-strong:#C9BFB8;--accent:#B5236B;--accent-ink:#8F174F;--accent-soft:#F9E3EC;--warn:#8A5A00;--warn-soft:#FBEFD3;--tape:#F2C94C;--ok:#2E7D4F;--ok-soft:#E3F1E8;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;--mono:"IBM Plex Mono",Menlo,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#17131A;--panel:#221D25;--ink:#F1EBF0;--muted:#A79FAB;--rule:#3A323D;--rule-strong:#4E4552;--accent:#D55181;--accent-ink:#F0A3BF;--accent-soft:#3B1F2C;--warn:#F0C36A;--warn-soft:#3B2E14;--tape:#D9B23F;--ok:#7BD39A;--ok-soft:#1E3527}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#17131A;--panel:#221D25;--ink:#F1EBF0;--muted:#A79FAB;--rule:#3A323D;--rule-strong:#4E4552;--accent:#D55181;--accent-ink:#F0A3BF;--accent-soft:#3B1F2C;--warn:#F0C36A;--warn-soft:#3B2E14;--tape:#D9B23F;--ok:#7BD39A;--ok-soft:#1E3527}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:clamp(16px,4vw,40px);padding-block:0 56px;overflow-x:hidden}
+a{color:var(--accent-ink)}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:900px;margin-inline:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+.top a.back{font-size:15px;font-weight:600;text-decoration:none}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;line-height:1;margin:0;text-wrap:balance}
+h1{font-size:clamp(36px,6vw,64px);font-weight:800;padding-block:40px 12px}
+h2{font-size:30px;font-weight:700}h2 span{color:var(--accent)}
+h3{font-size:22px;font-weight:700;text-transform:none;margin-top:6px}
+p{margin:0}.lede{font-size:19px;max-width:36em;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;margin-top:18px}
+.toc a{text-decoration:none;font-weight:600}
+.step{display:flex;flex-direction:column;gap:14px;padding-block:36px;border-top:1px solid var(--rule)}
+ol,ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;max-width:44em}
+code{font-family:var(--mono);font-size:15px;background:var(--panel);border:1px solid var(--rule);padding:1px 6px}
+figure{margin:0;background:var(--panel);border:1px solid var(--rule-strong);padding:8px}
+figure img{border:1px solid var(--rule);width:100%;height:auto}
+.step>*{min-width:0}
+figcaption{font-size:14px;color:var(--muted);padding:8px 4px 2px}
+figure.phone{max-width:320px}
+.note{background:var(--warn-soft);color:var(--warn);border-left:3px solid var(--warn);padding:10px 14px;font-size:15px;max-width:44em}
+.ok{background:var(--ok-soft);color:var(--ok);border-left:3px solid var(--ok);padding:10px 14px;font-size:15px;max-width:44em}
+.tip{color:var(--muted);font-size:15px;max-width:44em}
+.temp{border:2px dashed var(--warn);padding:12px 14px;font-size:15px;display:flex;flex-direction:column;gap:6px;max-width:44em}
+.temp b{color:var(--warn);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.ph{font-family:var(--mono);font-size:.8em;background:var(--tape);color:#221D25;border:2px dashed #8A5A00;border-radius:4px;padding:0 6px;white-space:nowrap}
+a[href^="{{"]{outline:3px dashed var(--warn);outline-offset:3px}
+a[href^="{{"]::after{content:" (link placeholder: " attr(href) ")";font:500 11px var(--mono);color:#221D25;background:var(--tape);padding:1px 5px;border-radius:3px;white-space:normal;word-break:break-all}
+dl{margin:0;display:grid;grid-template-columns:1fr;gap:10px;max-width:44em}
+dt{font-weight:600}dd{margin:0;color:var(--muted);font-size:16px}
+footer{padding-top:24px;font-size:13px;color:var(--muted)}
+@media (min-width:700px){dl{grid-template-columns:200px 1fr;gap:12px 20px}}
+</style>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="../">Who <span>Got</span> What</a>
+  <a class="back" href="../">Back to the main page</a>
+</header>
+<h1>Seller guide</h1>
+<p class="lede">First show: install, paste the code, click Send. Then how to read what comes back, how to resend after packing, and how to check a flagged order yourself in Whatnot.</p>
+<nav class="toc" aria-label="On this page">
+  <a href="#install">1. Install</a><a href="#settings">2. Settings</a><a href="#send">3. Send the show</a><a href="#read">Reading the list</a><a href="#slips">Slips</a><a href="#resend">Resend</a><a href="#receipt">Checking a flagged order</a>
+</nav>
+
+<div class="step" id="install">
+<h2><span>1.</span> Install the extension</h2>
+<p>Chrome on a computer. The Whatnot app has no Shipments tools, so the phone cannot do this part.</p>
+<ol>
+<li>Open <a href="{{WEBSTORE_URL}}">Whatnot Packing List Sender on the Chrome Web Store</a> and click <strong>Add to Chrome</strong>.</li>
+<li>Pin it: click the puzzle icon next to the address bar, then the pin next to the extension.</li>
+</ol>
+<div class="temp"><b>Temporary, until the Web Store listing is live: unpacked zip</b>
+<ol>
+<li>Download <a href="{{UNPACKED_ZIP_URL}}">the extension zip</a> and unzip it. You get a folder named <code>extension</code>.</li>
+<li>Go to <code>chrome://extensions</code> and switch on <strong>Developer mode</strong> at the top right.</li>
+<li>Click <strong>Load unpacked</strong> and pick the <code>extension</code> folder. Leave the folder where it is; Chrome reads it from there.</li>
+</ol>
+</div>
+</div>
+
+<div class="step" id="settings">
+<h2><span>2.</span> Paste the address and the code</h2>
+<ol>
+<li>Click the extension icon. A small Settings page opens.</li>
+<li>Paste the <strong>service address</strong> from your email into the first box (it ends in <code>/show</code>).</li>
+<li>Paste your <strong>access code</strong> into the second box and click <strong>Save</strong>.</li>
+<li>Chrome asks whether the extension may contact that address. Choose <strong>Allow</strong>. That is the only address it can talk to besides whatnot.com.</li>
+</ol>
+<p class="tip">The access code and the address come in the same email as your receipt, within <span class="ph">{{CODE_WITHIN}}</span> hours of paying. Lost it? Write to <span class="ph">{{SUPPORT_EMAIL}}</span>.</p>
+</div>
+
+<div class="step" id="send">
+<h2><span>3.</span> Send the show</h2>
+<ol>
+<li>Buy your shipping labels first, so the tracking numbers end up on the slips.</li>
+<li>Go to <code>whatnot.com/dashboard/shipments</code>. In the first dropdown (All Shows &amp; Marketplace) pick the show.</li>
+<li>Keep the status filter on <strong>Unfulfilled</strong>. The card warns you if the page shows all orders.</li>
+<li>Click <strong>Send show for packing list</strong> in the card at the bottom right. Leave the tab open until the card says <strong>Sent</strong>, with the order and package counts and how many show credits you have left. About 25 seconds for a 340-order show.</li>
+</ol>
+<figure><img src="../img/extension-card.jpg" width="1280" height="800" alt="The Shipments page with the Packing list card at the bottom right: Send show for packing list, Copy show link, Settings, and the status Sent, 342 orders, 51 packages." loading="lazy"><figcaption>The card on the Shipments page (sample page with placeholder buyers). It counts the orders the packages should hold and will not send a short list.</figcaption></figure>
+<p class="note">If the show has more than 50 packages the card switches the page to "Show 250" itself and continues; shows over 250 packages are read page by page. If the card says the orders could not be read, reload the page and click again.</p>
+<p class="ok">Done. Your list arrives by email: <span class="ph">{{TURNAROUND_SMALL}}</span> for shows up to about 150 orders, <span class="ph">{{TURNAROUND_LARGE}}</span> for bigger ones.</p>
+</div>
+
+<div class="step" id="read">
+<h2>Reading the list</h2>
+<figure><img src="../img/list-desktop.jpg" width="1440" height="900" alt="The packing list: search, buyer, sort and filter controls, the stats row (78 packages, 335 items, 8 need your check), then Package 1 with item numbers and the real product on every row." loading="lazy"><figcaption>Real list from a real show; buyer names, order numbers and tracking replaced.</figcaption></figure>
+<dl>
+<dt>The big pink number</dt><dd>The item number from the listing title ("Beauty pulls #42" is item 42), the number you stickered on the product. If the show used more than one listing name, it is written in small letters under the number.</dd>
+<dt>What to pack</dt><dd>What was on camera when the countdown hit zero, checked against what you said on the mic: brand, product, shade or size, bundle count.</dd>
+<dt>Each package is one label</dt><dd>A buyer with two labels shows "label 1 of 2" and "2 of 2", each with its own tracking number. Pack by label, not by username.</dd>
+<dt>Yellow rows</dt><dd>Need your check before sealing. The reason is on the row. <strong>Show evidence</strong> opens three pictures from the recording and what was said on the mic, with the buyer's name and the item number in bold.</dd>
+<dt>Sold at</dt><dd>The clock time, and under it in grey the position in the Whatnot replay (h:mm:ss). Drag the replay scrubber there to watch the sale.</dd>
+<dt>Tick boxes</dt><dd>Check items off as you pack. The page remembers on that phone or computer; a different device starts empty.</dd>
+<dt>Order numbers</dt><dd>Hidden by default to keep the table readable. The arrows next to the dimmed "Order" column bring them back.</dd>
+<dt>Search and filter</dt><dd>Any item number, buyer, product word or tracking number. Chips for hide packed, needs check only, hide giveaways, and one per flag reason.</dd>
+</dl>
+<figure><img src="../img/evidence-desktop.jpg" width="1440" height="900" alt="A row with its evidence open: three frames from the recording around the sale showing a six-pack of Aquaphor lip repair sticks held to the camera, and the transcript with the buyer and item number lines in bold." loading="lazy"><figcaption>An evidence panel. Seconds are counted from the countdown hitting zero, corrected for this stream's receipt offset.</figcaption></figure>
+<p class="tip"><strong>Giveaways</strong> are marked too. The box on camera at the draw is often not the prize, so the row says "giveaway prize" and leaves the item to you.</p>
+<p class="tip"><strong>Heard on the mic, no order in Whatnot.</strong> A separate box lists sales you called out that have no order behind them: the payment did not go through or it was cancelled during the show. The item is probably still in your pile. Do not pack it.</p>
+</div>
+
+<div class="step" id="slips">
+<h2>Packing slips</h2>
+<p>Click <strong>Print slips</strong> at the top of the list. One slip per shipping label, in the same order as Whatnot's label export, so the slips come off the printer in the pile order of the labels. Paper: 4 x 6 label, or letter with two slips per sheet.</p>
+<figure><img src="../img/slips-desktop.jpg" width="1440" height="900" alt="Packing slips: buyer, label 1 of 3, tracking, then each item number with the full product name and a tick box." loading="lazy"><figcaption>Buyers see the product, not "random". A small dot marks a row to look up on the list before packing.</figcaption></figure>
+</div>
+
+<div class="step" id="resend">
+<h2>Resend after you pack</h2>
+<p>Cancellations and failed payments arrive after you have packed, and tracking numbers appear when you buy more labels. Click <strong>Send show for packing list</strong> again on the same show. Resending is free and the list is rebuilt in place.</p>
+<ul>
+<li>The page opens with a <strong>"Changed since your last list"</strong> box: new orders in green with the product, removed orders in red with "pull this out of the buyer's box if already packed", moved orders with the old and new package, and the count of tracking numbers added.</li>
+<li>Your tick boxes survive. Orders keep their place.</li>
+<li>The CSV gets a Change column (NEW / MOVED, and the REMOVED rows at the end).</li>
+</ul>
+</div>
+
+<div class="step" id="receipt">
+<h2>Checking a flagged order in Whatnot yourself</h2>
+<p>The evidence panel usually settles it. If you want to see the moment in Whatnot's own video receipt:</p>
+<ol>
+<li>On the Shipments page, click <strong>Expand</strong> on the order, then <strong>Video Receipt</strong>. The clip starts playing.</li>
+<li>Expect the clip to start about 30 seconds <em>before</em> the sale, and sometimes to be off by more. The item on screen at the very start is usually the previous one.</li>
+<li>Better: take the grey replay position from the list's "Sold at" column and drag the full replay there. That time is corrected for the stream's offset.</li>
+</ol>
+<figure><img src="../img/seller-hub-video-receipt.jpg" width="1556" height="784" alt="The Whatnot Shipments page with one order expanded, showing the Video Receipt button on the item row." loading="lazy"><figcaption>Expand an order, then Video Receipt. Buyer names and the show title are blurred here.</figcaption></figure>
+<p class="note">Receipts are kept by Whatnot for 60 days and vanish when a payment fails. The list keeps its own frames and words, so the evidence cards stay available after that.</p>
+</div>
+
+<footer>Who Got What is an independent service and is not affiliated with, endorsed by, or supported by Whatnot, Inc. Questions: <span class="ph">{{SUPPORT_EMAIL}}</span></footer>
+</div>
+</html>

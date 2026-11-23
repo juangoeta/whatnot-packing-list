@@ -1,0 +1,150 @@
+<meta charset="utf-8">
+<title>Sep 19 Sales Recap</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#FAF7F2;--panel:#FFFFFF;--ink:#221D25;--muted:#6E6674;--rule:#E4DCD4;--grid:#EDE6DF;--accent:#B5236B;--viz:#B5236B;--viz-soft:#E9B7CE;--head:#F2ECE5;--new-bg:#E3F1E8;--new-ink:#2E7D4F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--grid:#2C2632;--accent:#F06BA8;--viz:#D55181;--viz-soft:#6B2F48;--head:#2A252F;--new-bg:#1E3527;--new-ink:#7BD39A}}
+:root[data-theme="dark"]{--bg:#17141A;--panel:#211D26;--ink:#F1ECF3;--muted:#A79FAD;--rule:#332C3A;--grid:#2C2632;--accent:#F06BA8;--viz:#D55181;--viz-soft:#6B2F48;--head:#2A252F;--new-bg:#1E3527;--new-ink:#7BD39A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45;padding-block:28px 64px}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;display:flex;flex-direction:column;gap:36px}
+h1{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:34px;line-height:1.05;text-transform:uppercase;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+h2{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+.lede{margin:0 0 14px;max-width:65ch}
+.tiles{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:0;border-block:1px solid var(--rule)}
+.tile{padding:14px 16px 14px 0}
+.tile+.tile{padding-left:16px;border-left:1px solid var(--rule)}
+.tile .l{font-size:13px;color:var(--muted)}
+.tile .v{font-weight:600;font-size:26px;line-height:1.15}
+.tile.hero .v{font-size:52px;line-height:1}
+.tile .d{font-size:13px;color:var(--muted)}
+.chart{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px 12px 8px;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:"Source Sans 3",system-ui,sans-serif;fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.chart text.val{fill:var(--ink);font-weight:600;font-size:13px}
+.chart text.note{fill:var(--ink);font-size:13px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.3;padding:6px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-100%);z-index:3}
+.tip b{font-weight:600}
+details{margin-top:8px;font-size:14px}
+summary{cursor:pointer;color:var(--muted)}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:600;padding:6px 10px 6px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:7px 10px 7px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13.5px}
+.bar{display:inline-block;height:8px;border-radius:0 4px 4px 0;background:var(--viz);vertical-align:middle;margin-right:8px}
+.new{display:inline-block;font-size:11px;font-weight:600;background:var(--new-bg);color:var(--new-ink);border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+ul.take{margin:0;padding-left:20px;max-width:70ch}
+ul.take li{margin-bottom:6px}
+@media (max-width:720px){.tiles{grid-template-columns:1fr 1fr}.tile.hero{grid-column:1/-1;border-bottom:1px solid var(--rule)}.tile+.tile{border-left:0;padding-left:0}.two{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+<div class="wrap">
+<header>
+<h1>Sep 19 Sales Recap</h1>
+<p class="sub">BEAUTY PULLS NEW INVENTORY · Saturday Sep 19, 2026 · 10:09 AM to 12:30 PM EDT · revenue only, no item costs</p>
+</header>
+
+<section class="tiles" aria-label="Headline numbers">
+<div class="tile hero"><div class="l">Sales</div><div class="v">$2,157</div><div class="d">$1,759.52 completed earnings · $35.76 shipping spend</div></div>
+<div class="tile"><div class="l">Paid orders</div><div class="v">360</div><div class="d">plus 12 giveaways</div></div>
+<div class="tile"><div class="l">Average order</div><div class="v">$5.99</div><div class="d">median $5</div></div>
+<div class="tile"><div class="l">Per hour</div><div class="v">$918</div><div class="d">153 orders an hour</div></div>
+<div class="tile"><div class="l">Buyers</div><div class="v">60</div><div class="d">43 first-time, 65% of sales</div></div>
+</section>
+
+<section>
+<h2>Sales every 15 minutes</h2>
+<p class="lede">Minutes 15 to 30 were the peak at $426. After minute 90 every block came in under $165, and the last 50 minutes were mostly $1 to $4 snack sales.</p>
+<div class="chart" id="c1"></div>
+<details><summary>Show as table</summary><div class="scroll"><table id="t1"></table></div></details>
+</section>
+
+<section>
+<h2>Same lip balm bundle, three prices</h2>
+<p class="lede">Each dot is one sale of the Peach Bee Balm bundle of 4. It sold at about the same speed in all three runs, but the middle run brought double the price.</p>
+<div class="chart" id="c2"></div>
+<details><summary>Show as table</summary><div class="scroll"><table id="t2"></table></div></details>
+</section>
+
+<section>
+<h2>What to change next show</h2>
+<ul class="take">
+<li>Open with cheap warm-up items and hold the best stock for minutes 15 to 60, when the room pays the most.</li>
+<li>Keep runs short. Across products with five or more sales, the first two sales averaged $6.57 and the last two $5.73.</li>
+<li>The Beekman body wash went from $7–9 in its first run to $15–17 in its second. Bring it back mid-show again.</li>
+<li>Single Iberia coconut bags averaged $1.83 and full cases of 12 went for $3–5. Bundle them as add-ons instead of running them alone.</li>
+<li>Custom bundle bags averaged $18.20 but took 2 to 3 minutes each to build on stream.</li>
+</ul>
+</section>
+
+<section>
+<h2>Products by sales</h2>
+<div class="scroll"><table id="tp"></table></div>
+<details><summary>Show all <span id="np"></span> products</summary><div class="scroll"><table id="tp2"></table></div></details>
+</section>
+
+<div class="two">
+<section><h2>Categories</h2><div class="scroll"><table id="tc"></table></div></section>
+<section><h2>Top buyers</h2><div class="scroll"><table id="tb"></table></div>
+<details><summary>Show all 60 buyers</summary><div class="scroll"><table id="tb2"></table></div></details></section>
+</div>
+</div>
+<script>
+const D=__DATA__;
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=n=>'$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+function tip(host){const t=document.createElement('div');t.className='tip';t.hidden=true;host.appendChild(t);
+ return{show(html,x,y){t.innerHTML=html;t.hidden=false;const w=host.clientWidth;t.style.left=Math.max(70,Math.min(w-70,x))+'px';t.style.top=(y-8)+'px'},hide(){t.hidden=true}}}
+function svgEl(host,W,H){host.insertAdjacentHTML('afterbegin',`<svg viewBox="0 0 ${W} ${H}" role="img"></svg>`);return host.querySelector('svg')}
+function place(host,svg,el,t,html){const show=()=>{const r=el.getBoundingClientRect(),h=host.getBoundingClientRect();t.show(html,r.left+r.width/2-h.left,r.top-h.top)};
+ el.addEventListener('mouseenter',show);el.addEventListener('focus',show);el.addEventListener('mouseleave',t.hide);el.addEventListener('blur',t.hide)}
+
+// Chart 1: columns, one scale for marks + ticks
+(()=>{const host=$('#c1'),W=900,H=300,m={l:48,r:12,t:24,b:40},pw=W-m.l-m.r,ph=H-m.t-m.b,max=500,y=v=>m.t+ph-(v/max)*ph;
+ const svg=svgEl(host,W,H);svg.setAttribute('aria-label','Column chart of sales per 15 minutes');let s='';
+ [0,100,200,300,400,500].forEach(v=>{s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">$${v}</text>`});
+ const band=pw/D.pace.length,bw=24;
+ D.pace.forEach((p,i)=>{const cx=m.l+band*i+band/2,top=y(p[1]),h=y(0)-top;
+  s+=`<path class="col" tabindex="0" data-i="${i}" d="M${cx-bw/2},${y(0)}V${top+4}q0,-4 4,-4h${bw-8}q4,0 4,4V${y(0)}z" fill="var(--viz)"/>`;
+  s+=`<rect class="hit" data-i="${i}" x="${cx-band/2}" y="${m.t}" width="${band}" height="${ph}" fill="transparent"/>`;
+  s+=`<text x="${cx}" y="${H-m.b+18}" text-anchor="middle">${p[0]}–${p[0]+15}</text>`;
+  if(i===1||i===D.pace.length-1)s+=`<text class="val" x="${cx}" y="${top-7}" text-anchor="middle">$${p[1]}</text>`});
+ s+=`<text x="${m.l+pw/2}" y="${H-4}" text-anchor="middle">minutes into the show</text>`;svg.innerHTML=s;
+ const t=tip(host);svg.querySelectorAll('.hit,.col').forEach(el=>{const p=D.pace[+el.dataset.i],col=svg.querySelector(`.col[data-i="${el.dataset.i}"]`);
+  const html=`<b>Minutes ${p[0]}–${p[0]+15}</b><br>${money(p[1])} · ${p[2]} orders · ${money((p[1]/p[2]).toFixed(2))} avg`;
+  const show=()=>{const r=col.getBoundingClientRect(),h=host.getBoundingClientRect();t.show(html,r.left+r.width/2-h.left,r.top-h.top);col.setAttribute('fill-opacity','.8')};
+  const hide=()=>{t.hide();col.removeAttribute('fill-opacity')};
+  el.addEventListener('mouseenter',show);el.addEventListener('mouseleave',hide);el.addEventListener('focus',show);el.addEventListener('blur',hide)});
+ $('#t1').innerHTML='<tr><th>Minutes</th><th class="n">Sales</th><th class="n">Orders</th><th class="n">Avg order</th></tr>'+D.pace.map(p=>`<tr><td>${p[0]}–${p[0]+15}</td><td class="n">${money(p[1])}</td><td class="n">${p[2]}</td><td class="n">${money((p[1]/p[2]).toFixed(2))}</td></tr>`).join('');
+})();
+
+// Chart 2: three runs as panels on one price scale; x = order of sale within the run
+(()=>{const host=$('#c2'),W=900,H=300,m={l:48,r:16,t:44,b:40},pw=W-m.l-m.r,ph=H-m.t-m.b,ymax=12,y=v=>m.t+ph-(v/ymax)*ph;
+ const svg=svgEl(host,W,H);svg.setAttribute('aria-label','Dot plot of '+D.runs_product+' sale prices by run');let s='';
+ [0,3,6,9,12].forEach(v=>{s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end">$${v}</text>`});
+ const runs=[];D.runs.forEach((p,i)=>{const r=runs[runs.length-1],q=[p[0],p[1],p[2],i];if(r&&p[0]-r[r.length-1][0]<5)r.push(q);else runs.push([q])});
+ const gap=3,slots=D.runs.length+gap*(runs.length-1)+1,step=pw/slots;let k=1;
+ runs.forEach((r,ri)=>{const a=r.reduce((t,p)=>t+p[1],0)/r.length,x0=m.l+step*k,x1=m.l+step*(k+r.length-1);
+  s+=`<line x1="${x0-step/2}" x2="${x1+step/2}" y1="${y(a)}" y2="${y(a)}" stroke="var(--viz-soft)" stroke-width="2" stroke-linecap="round"/>`;
+  s+=`<text class="note" x="${x0-step/2}" y="${m.t-24}">Minutes ${Math.floor(r[0][0])}–${Math.ceil(r[r.length-1][0])}</text><text x="${x0-step/2}" y="${m.t-8}">${r.length} sales, avg $${a.toFixed(2)}</text>`;
+  s+=`<text x="${(x0+x1)/2}" y="${H-m.b+18}" text-anchor="middle">run ${ri+1}, in the order sold</text>`;
+  r.forEach((p,j)=>{s+=`<circle class="dot" tabindex="0" data-i="${p[3]}" cx="${x0+step*j}" cy="${y(p[1])}" r="5" fill="var(--viz)" stroke="var(--panel)" stroke-width="2"/>`});
+  k+=r.length+gap});
+ svg.innerHTML=s;const t=tip(host);
+ svg.querySelectorAll('.dot').forEach(el=>{const p=D.runs[+el.dataset.i];place(host,svg,el,t,`<b>${money(p[1])}</b> at minute ${p[0]}<br>${esc(p[2])}`)});
+ $('#t2').innerHTML='<tr><th class="n">Minute</th><th class="n">Price</th><th>Buyer</th></tr>'+D.runs.map(p=>`<tr><td class="n">${p[0]}</td><td class="n">${money(p[1])}</td><td>${esc(p[2])}</td></tr>`).join('');
+})();
+
+// Tables
+(()=>{const head='<tr><th>Product</th><th class="n">Sales</th><th class="n">Orders</th><th class="n">Units</th><th class="n">Avg order</th><th class="n">Per unit</th><th class="n">Low–high</th></tr>';
+ const mx=D.prod[0].rev,row=p=>`<tr><td>${esc(p.name)}</td><td class="n"><span class="bar" style="width:${Math.max(2,Math.round(p.rev/mx*60))}px"></span>${money(p.rev)}</td><td class="n">${p.orders}</td><td class="n">${p.units}</td><td class="n">${money(p.avg.toFixed(2))}</td><td class="n">${money(p.per_unit.toFixed(2))}</td><td class="n">$${p.lo}–${p.hi}</td></tr>`;
+ $('#tp').innerHTML=head+D.prod.slice(0,15).map(row).join('');$('#tp2').innerHTML=head+D.prod.slice(15).map(row).join('');$('#np').textContent=D.prod.length;
+ const cm=D.sec[0][1];$('#tc').innerHTML='<tr><th>Category</th><th class="n">Sales</th><th class="n">Orders</th></tr>'+D.sec.map(c=>`<tr><td>${esc(c[0])}</td><td class="n"><span class="bar" style="width:${Math.max(2,Math.round(c[1]/cm*60))}px"></span>${money(c[1])}</td><td class="n">${c[2]}</td></tr>`).join('');
+ const bh='<tr><th>Buyer</th><th class="n">Spent</th><th class="n">Items</th></tr>',br=b=>`<tr><td>${esc(b[0])}${b[3]?'<span class="new">first-time</span>':''}</td><td class="n">${money(b[1])}</td><td class="n">${b[2]}</td></tr>`;
+ $('#tb').innerHTML=bh+D.buyers.slice(0,10).map(br).join('');$('#tb2').innerHTML=bh+D.buyers.slice(10).map(br).join('');
+})();
+</script>

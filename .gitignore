@@ -1,0 +1,6 @@
+node_modules/
+*.zip
+.DS_Store
+receiver/ACCESS_CODE.txt
+.pytest_cache/
+__pycache__/

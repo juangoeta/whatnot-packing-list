@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Welcome · Who Got What</title>
+<link rel="stylesheet" href="shared.css">
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="icons/icon128.png" width="36" height="36" alt="">
+    <div><div class="name">Who <span>Got</span> What</div><div class="tag">Packing lists for Whatnot sellers</div></div>
+    <div class="spacer"></div>
+    <a href="options.html">Settings</a>
+  </header>
+
+  <h1>Your show, rewatched for you.</h1>
+  <p class="lede">After a live, one click on your Shipments page. Back comes a packing list that names the real product in
+  every order, with pictures from the moment of the sale and a short list of orders worth a second look.</p>
+  <p class="muted">No login, no password. The extension reads your own Shipments page and sends two things: the show link and
+  the order list. No video touches your computer.</p>
+
+
+  <section>
+    <span class="eyebrow">How it works</span>
+    <ol class="steps">
+      <li><div><b>Enter your access code</b><p>It is in your welcome email. Paste it in the form at the bottom of this page and click Save.</p></div></li>
+      <li><div><b>Open Seller Hub &rsaquo; Shipments</b><p>Pick the show at the top of the page and keep the status on <b>Unfulfilled</b>. Buy your labels as usual.</p></div></li>
+      <li><div><b>Click Send</b><p><span class="btn-sample">Send show for packing list</span><br>The card sits at the bottom right of the Shipments page. About 25 seconds for a 340-order show.</p></div></li>
+      <li><div><b>Get the link</b><p>The packing list and slips arrive by email, usually the same day. Open the link on a phone or a laptop; it works offline once loaded.</p></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <span class="eyebrow">What it looks like</span>
+    <figure class="figure">
+      <div class="frame">
+        <div class="bar"><i></i><i></i><i></i><span>packing list · Oct 5</span></div>
+        <img src="img/list-desktop.jpg" width="1440" height="900" alt="A finished packing list: packages with tracking numbers, each order with its item number, sold time, price and what to pack, and a count of orders that need a check">
+      </div>
+    </figure>
+  </section>
+
+  <section class="setup" id="setup">
+    <h2>Connect the extension</h2>
+    <label for="token">Access code <span>From your welcome email. It is the only thing to set up.</span></label>
+    <input id="token" autocomplete="off" spellcheck="false" placeholder="paste the code here">
+    <details id="adv"><summary>Advanced: send to a different address</summary>
+      <label for="endpoint"><span>Leave this empty to use the Who Got What service. Only for a self-hosted receiver; the address starts with https://. When you save one, Chrome asks whether the extension may contact that one address. Choose <b>Allow</b>.</span></label>
+      <input id="endpoint" autocomplete="off" spellcheck="false" placeholder="https://">
+    </details>
+    <div class="actions"><button id="save" class="primary">Save</button><span id="msg" class="saved"></span></div>
+    <p class="note">The extension can reach only whatnot.com and the Who Got What service, nothing else. No video touches your computer.</p>
+  </section>
+
+  <footer class="foot"><span>Who Got What</span><a href="options.html">Settings</a></footer>
+</div>
+<script src="options.js"></script>
+</html>
